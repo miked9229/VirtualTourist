@@ -98,11 +98,8 @@
 			isa = PBXGroup;
 			children = (
 				924457621E9023AC0009F199 /* AppDelegate.swift */,
-				924457641E9023AC0009F199 /* ViewController.swift */,
-				924457661E9023AC0009F199 /* Main.storyboard */,
-				924457691E9023AC0009F199 /* Assets.xcassets */,
-				9244576B1E9023AC0009F199 /* LaunchScreen.storyboard */,
-				9244576E1E9023AC0009F199 /* Info.plist */,
+				924457911E9027280009F199 /* HelperFiles */,
+				924457901E90271C0009F199 /* Controllers */,
 			);
 			path = VirtualTourist;
 			sourceTree = "<group>";
@@ -123,6 +120,25 @@
 				924457841E9023AC0009F199 /* Info.plist */,
 			);
 			path = VirtualTouristUITests;
+			sourceTree = "<group>";
+		};
+		924457901E90271C0009F199 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				924457641E9023AC0009F199 /* ViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		924457911E9027280009F199 /* HelperFiles */ = {
+			isa = PBXGroup;
+			children = (
+				9244576E1E9023AC0009F199 /* Info.plist */,
+				924457691E9023AC0009F199 /* Assets.xcassets */,
+				9244576B1E9023AC0009F199 /* LaunchScreen.storyboard */,
+				924457661E9023AC0009F199 /* Main.storyboard */,
+			);
+			name = HelperFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
