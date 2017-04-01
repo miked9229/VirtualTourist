@@ -25,10 +25,10 @@
             </objects>
             <point key="canvasLocation" x="-794" y="134"/>
         </scene>
-        <!--View Controller-->
+        <!--Map View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MapViewController" customModule="VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -36,12 +36,40 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Yxq-MW-0b6">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="603" id="GSx-Ci-qdW"/>
+                                    <constraint firstAttribute="width" constant="375" id="buM-Rq-wXn"/>
+                                </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="JkN-dN-hix" appends="YES" id="uw2-C3-UZI"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Yxq-MW-0b6" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="9Ih-B5-qQp"/>
+                            <constraint firstItem="Yxq-MW-0b6" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Jzg-wf-KTB"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Yxq-MW-0b6" secondAttribute="bottom" id="fFF-PR-uSx"/>
+                            <constraint firstAttribute="trailing" secondItem="Yxq-MW-0b6" secondAttribute="trailing" id="xy2-3Y-hYP"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="NtB-F5-AvH"/>
+                    <connections>
+                        <outlet property="mapView" destination="Yxq-MW-0b6" id="I6l-7f-yyx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="1" id="JkN-dN-hix">
+                    <connections>
+                        <action selector="addPin:" destination="BYZ-38-t0r" id="Kae-yj-Rbl"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>
     </scenes>
 </document>
