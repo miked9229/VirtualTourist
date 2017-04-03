@@ -17,10 +17,14 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.mapView.delegate = self
+        print(self.mapView.region.center.latitude)
+        print(self.mapView.region.center.longitude)
         
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
     
     @IBAction func addPin(_ sender: UILongPressGestureRecognizer) {

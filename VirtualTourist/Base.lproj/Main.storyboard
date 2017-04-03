@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
+        <!--Application Navigation Controller-->
         <scene sceneID="ECN-EH-TKN">
             <objects>
-                <navigationController id="4mh-VJ-8cZ" sceneMemberID="viewController">
+                <navigationController id="4mh-VJ-8cZ" customClass="ApplicationNavigationController" customModule="VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9AH-by-vSB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -25,7 +25,7 @@
             </objects>
             <point key="canvasLocation" x="-794" y="134"/>
         </scene>
-        <!--Map View Controller-->
+        <!--Virtual Tourist-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="MapViewController" customModule="VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
@@ -57,7 +57,9 @@
                             <constraint firstAttribute="trailing" secondItem="Yxq-MW-0b6" secondAttribute="trailing" id="xy2-3Y-hYP"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="NtB-F5-AvH"/>
+                    <navigationItem key="navigationItem" title="Virtual Tourist" id="NtB-F5-AvH">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="jZ2-l6-agf"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="Yxq-MW-0b6" id="I6l-7f-yyx"/>
                     </connections>
