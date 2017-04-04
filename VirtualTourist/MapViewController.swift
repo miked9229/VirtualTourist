@@ -19,12 +19,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         super.viewWillAppear(animated)
         self.mapView.delegate = self
         
-        // Set MapView Values
+        // Set MapView Values From User Defaults
         
         setMapValues()
 
-        
-        
         
         
     }
