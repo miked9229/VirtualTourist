@@ -15,7 +15,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "12"
             endingLineNumber = "12"
-            landmarkName = "MapLocation"
+            landmarkName = "MapLocations"
             landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VirtualTourist/MapLocations.swift"
-            timestampString = "512951579.306267"
+            timestampString = "512952175.340613"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "13"
-            endingLineNumber = "13"
-            landmarkName = "MapLocation"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
+            landmarkName = "MapLocations"
             landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>

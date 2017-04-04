@@ -18,15 +18,22 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.mapView.delegate = self
-        print(self.mapView.region.center.latitude)
-        print(self.mapView.region.center.longitude)
+        
+        // Set MapView Values
+        
+        setMapValues()
+
+        
+        
+        
         
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
-    
+
     @IBAction func addPin(_ sender: UILongPressGestureRecognizer) {
         instantiatePinAtLocation(sender)
     
@@ -39,10 +46,34 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         annotation.coordinate = tapPoint
         mapView.removeAnnotation(annotation)
         mapView.addAnnotation(annotation)
+
     }
     
+    public func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+  
+        UserDefaults.standard.set(mapView.region.center.latitude, forKey: "latitudeKey")
+        UserDefaults.standard.set(mapView.region.center.longitude, forKey: "longitudeKey")
+        UserDefaults.standard.set(mapView.region.span.latitudeDelta, forKey: "latitudeDeltaKey")
+        UserDefaults.standard.set(mapView.region.span.longitudeDelta, forKey: "longitudeDeltaKey")
+    }
     
+    public func setMapValues() {
+        
+        let span = MKCoordinateSpanMake(UserDefaults.standard.double(forKey: "latitudeDeltaKey"), UserDefaults.standard.double(forKey: "longitudeDeltaKey"))
+        
+        let location = CLLocationCoordinate2D(latitude: UserDefaults.standard.double(forKey: "latitudeKey"), longitude: UserDefaults.standard.double(forKey: "longitudeKey"))
+        
+        let region = MKCoordinateRegion(center: location, span: span)
+        
+        self.mapView.setRegion(region, animated: true)
+        
+    }
+
     
+ 
+
+    
+
     
     
 }
