@@ -17,6 +17,7 @@
 		9244579A1E9033110009F199 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924457991E9033110009F199 /* NavigationController.swift */; };
 		9244579C1E904C180009F199 /* MapLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9244579B1E904C180009F199 /* MapLocations.swift */; };
 		9244579F1E94679F0009F199 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9244579D1E94679F0009F199 /* Model.xcdatamodeld */; };
+		924457A11E9480C50009F199 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924457A01E9480C50009F199 /* CoreDataStack.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		924457991E9033110009F199 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		9244579B1E904C180009F199 /* MapLocations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLocations.swift; sourceTree = "<group>"; };
 		9244579E1E94679F0009F199 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		924457A01E9480C50009F199 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				9244579D1E94679F0009F199 /* Model.xcdatamodeld */,
+				924457A01E9480C50009F199 /* CoreDataStack.swift */,
 				924457621E9023AC0009F199 /* AppDelegate.swift */,
 				924457951E902FEB0009F199 /* HelperClasesAndStruct */,
 				924457941E90292B0009F199 /* Clients */,
@@ -306,6 +309,7 @@
 				924457931E9027ED0009F199 /* MapViewController.swift in Sources */,
 				9244579A1E9033110009F199 /* NavigationController.swift in Sources */,
 				9244579F1E94679F0009F199 /* Model.xcdatamodeld in Sources */,
+				924457A11E9480C50009F199 /* CoreDataStack.swift in Sources */,
 				924457631E9023AC0009F199 /* AppDelegate.swift in Sources */,
 				9244579C1E904C180009F199 /* MapLocations.swift in Sources */,
 			);
