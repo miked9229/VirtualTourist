@@ -13,6 +13,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
+    let stack = CoreDataStack(modelName: "Model")!
+    
     
     func checkIfFirstLaunch() {
         if UserDefaults.standard.bool(forKey: "hasLaunchedBefore") {
@@ -27,12 +29,58 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaults.standard.synchronize()
         }
     }
+    
+    func preloadData() {
+        
+        // Remove previous stuff (if any)
+        do {
+            try stack.dropAllData()
+        } catch {
+            print("Error droping all objects in DB")
+        }
+        
+       let pin1 = Pin(latitude: 40.00, longitude: -30.00, context: stack.context)
+        let pin2 = Pin(latitude: 40.00, longitude: -70.00, context: stack.context)
+        
+        let image = UIImage(named: "dog")
+        
+        let image1 = UIImage(named: "cat")
+        
+        
+        let convertedImage = UIImagePNGRepresentation(image!)! as? NSData
+        
+        
+        let convertedImage1 = UIImagePNGRepresentation(image1!)! as? NSData
+        
+        
+        pin1.addToPhotos(Photo(image: convertedImage!, context: stack.context))
+        
+        pin1.addToPhotos(Photo(image: convertedImage1!, context: stack.context))
+        
+        // Photo(image: convertedImage!, context: stack.context)
+        
+        
+       // pin1.photos = Photo(image: convertedImage1!, context: stack.context)
+        
+        
+        
+        print(pin1)
+        
 
+        print(pin2)
+        
+        
+        
+        
+
+
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
       
         checkIfFirstLaunch()
+        preloadData()
         return true
     }
 
