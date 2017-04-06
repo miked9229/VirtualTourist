@@ -8,9 +8,10 @@
 
 import Foundation
 import MapKit
+import CoreData
 
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate  {
     
     
     @IBOutlet weak var mapView: MKMapView!
@@ -19,10 +20,55 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         super.viewWillAppear(animated)
         self.mapView.delegate = self
         
+        
         // Set MapView Values From User Defaults
         
         setMapValues()
 
+        
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = delegate.stack
+        
+    
+
+         let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "Pin")
+        
+        
+     
+        let pins = try? delegate.stack.context.fetch(fr) as? [Pin]
+        print("pins from function: \(pins)")
+        
+        fr.sortDescriptors = [NSSortDescriptor(key: "latitude", ascending: true),
+                              NSSortDescriptor(key: "longitude", ascending: true)]
+        
+        print(pins??[0])
+        
+        
+        let coordinate = CLLocationCoordinate2D(latitude: (pins??[0].latitude)!, longitude: (pins??[0].longitude)!)
+        
+        print(coordinate)
+        
+         let annotation = MKPointAnnotation()
+        
+        annotation.coordinate = coordinate
+        
+        performUIUpdatesOnMain {
+            
+            self.mapView.addAnnotation(annotation)
+        }
+        
+  
+        
+        
+    
+      /*   let fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: stack.context, sectionNameKeyPath: nil, cacheName: nil) */
+    
+        let pinCount =  try? delegate.stack.context.count(for: NSFetchRequest(entityName: "Pin"))
+        let photoCount = try? delegate.stack.context.count(for: NSFetchRequest(entityName: "Photo"))
+        print("\(pinCount) Pins Found")
+        print("\(photoCount) Photos Found")
+        
+        
         
         
     }
@@ -33,18 +79,22 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
 
     @IBAction func addPin(_ sender: UILongPressGestureRecognizer) {
+        print(sender.isEnabled)
         instantiatePinAtLocation(sender)
     
     }
 
     public func instantiatePinAtLocation(_ sender: UILongPressGestureRecognizer) {
+       
         let location = sender.location(in: mapView)
         let tapPoint = mapView.convert(location, toCoordinateFrom: mapView)
         let annotation = MKPointAnnotation()
         annotation.coordinate = tapPoint
-        mapView.removeAnnotation(annotation)
         mapView.addAnnotation(annotation)
-
+        
+        sender.isEnabled = false
+        sender.isEnabled = true
+        
     }
     
     public func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
@@ -67,11 +117,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
     }
 
-    
- 
 
-    
-
-    
     
 }

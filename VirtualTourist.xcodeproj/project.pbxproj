@@ -22,6 +22,7 @@
 		924457D11E95D7E10009F199 /* Photo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924457CD1E95D7E10009F199 /* Photo+CoreDataProperties.swift */; };
 		924457D21E95D7E10009F199 /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924457CE1E95D7E10009F199 /* Pin.swift */; };
 		924457D31E95D7E10009F199 /* Pin+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924457CF1E95D7E10009F199 /* Pin+CoreDataProperties.swift */; };
+		924457D51E96EABD0009F199 /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924457D41E96EABD0009F199 /* GCDBlackBox.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		924457CD1E95D7E10009F199 /* Photo+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Photo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		924457CE1E95D7E10009F199 /* Pin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
 		924457CF1E95D7E10009F199 /* Pin+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Pin+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		924457D41E96EABD0009F199 /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 		924457561E9023AC0009F199 = {
 			isa = PBXGroup;
 			children = (
+				924457D41E96EABD0009F199 /* GCDBlackBox.swift */,
 				924457CC1E95D7E10009F199 /* Photo.swift */,
 				924457CD1E95D7E10009F199 /* Photo+CoreDataProperties.swift */,
 				924457CE1E95D7E10009F199 /* Pin.swift */,
@@ -322,6 +325,7 @@
 				924457931E9027ED0009F199 /* MapViewController.swift in Sources */,
 				924457D01E95D7E10009F199 /* Photo.swift in Sources */,
 				924457D31E95D7E10009F199 /* Pin+CoreDataProperties.swift in Sources */,
+				924457D51E96EABD0009F199 /* GCDBlackBox.swift in Sources */,
 				9244579A1E9033110009F199 /* NavigationController.swift in Sources */,
 				924457A11E9480C50009F199 /* CoreDataStack.swift in Sources */,
 				924457631E9023AC0009F199 /* AppDelegate.swift in Sources */,

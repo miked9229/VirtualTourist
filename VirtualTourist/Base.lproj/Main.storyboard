@@ -65,11 +65,12 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="1" id="JkN-dN-hix">
+                <pongPressGestureRecognizer allowableMovement="1" minimumPressDuration="1" id="JkN-dN-hix">
                     <connections>
                         <action selector="addPin:" destination="BYZ-38-t0r" id="Kae-yj-Rbl"/>
                     </connections>
                 </pongPressGestureRecognizer>
+                <tapGestureRecognizer id="yjo-fl-slp"/>
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>

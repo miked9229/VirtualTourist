@@ -11,18 +11,9 @@ import UIKit
 
 class ApplicationNavigationController: UINavigationController {
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(helloworld))
-    }
     
-    public func helloworld() {
-        print("Hello World")
-        
-        
-
     }
-    
 }

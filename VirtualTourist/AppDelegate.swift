@@ -34,43 +34,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Remove previous stuff (if any)
         do {
-            try stack.dropAllData()
+        try stack.dropAllData()
         } catch {
             print("Error droping all objects in DB")
         }
         
-       let pin1 = Pin(latitude: 40.00, longitude: -30.00, context: stack.context)
-        let pin2 = Pin(latitude: 40.00, longitude: -70.00, context: stack.context)
+       let pin1 = Pin(latitude: 39.00, longitude: -95.00, context: stack.context)
+       let pin2 = Pin(latitude: 39.00, longitude: -95.00, context: stack.context)
         
         let image = UIImage(named: "dog")
         
         let image1 = UIImage(named: "cat")
         
         
-        let convertedImage = UIImagePNGRepresentation(image!)! as? NSData
+        let convertedImage = UIImagePNGRepresentation(image!)! as NSData
         
         
-        let convertedImage1 = UIImagePNGRepresentation(image1!)! as? NSData
+        let convertedImage1 = UIImagePNGRepresentation(image1!)! as NSData
         
         
-        pin1.addToPhotos(Photo(image: convertedImage!, context: stack.context))
+        let photo1 = Photo(image: convertedImage, context: stack.context)
         
-        pin1.addToPhotos(Photo(image: convertedImage1!, context: stack.context))
+        let photo2 = Photo(image: convertedImage1, context: stack.context)
         
-        // Photo(image: convertedImage!, context: stack.context)
+      //  photo1.pin = pin1
         
-        
-       // pin1.photos = Photo(image: convertedImage1!, context: stack.context)
-        
+        //photo2.pin = pin1
         
         
-        print(pin1)
+        stack.save()
         
 
-        print(pin2)
-        
-        
-        
         
 
 
@@ -81,6 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       
         checkIfFirstLaunch()
         preloadData()
+        stack.autoSave(60)
         return true
     }
 
@@ -93,6 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        stack.save()
        
     }
 
