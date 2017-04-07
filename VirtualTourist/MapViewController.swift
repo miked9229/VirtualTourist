@@ -29,32 +29,53 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let stack = delegate.stack
         
-    
-
          let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "Pin")
         
+        var pins: [Pin]
+        do {
+            
+            try pins = stack.context.fetch(fr) as! [Pin]
+            
+            
+        } catch {
+            pins = []
+        }
+            
+            
         
-     
-        let pins = try? delegate.stack.context.fetch(fr) as? [Pin]
+   
+        
         print("pins from function: \(pins)")
         
         fr.sortDescriptors = [NSSortDescriptor(key: "latitude", ascending: true),
                               NSSortDescriptor(key: "longitude", ascending: true)]
         
-        print(pins??[0])
+        print(pins[1])
+        print(pins[0])
         
         
-        let coordinate = CLLocationCoordinate2D(latitude: (pins??[0].latitude)!, longitude: (pins??[0].longitude)!)
+        let coordinate1 = CLLocationCoordinate2D(latitude: (pins[1].latitude), longitude: (pins[1].longitude))
         
-        print(coordinate)
+        let coordinate0 = CLLocationCoordinate2D(latitude: (pins[0].latitude), longitude: (pins[0].longitude))
         
-         let annotation = MKPointAnnotation()
         
-        annotation.coordinate = coordinate
+        print(coordinate1)
+        
+        print(coordinate0)
+        
+         let annotation1 = MKPointAnnotation()
+        let annotation2 = MKPointAnnotation()
+        
+        
+        annotation1.coordinate = coordinate1
+        annotation2.coordinate = coordinate0
+        
+        
         
         performUIUpdatesOnMain {
             
-            self.mapView.addAnnotation(annotation)
+            self.mapView.addAnnotation(annotation1)
+            self.mapView.addAnnotation(annotation2)
         }
         
   

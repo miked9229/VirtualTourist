@@ -38,12 +38,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
             print("Error droping all objects in DB")
         }
-        
+     
        let pin1 = Pin(latitude: 39.00, longitude: -95.00, context: stack.context)
-       let pin2 = Pin(latitude: 39.00, longitude: -95.00, context: stack.context)
+       let pin2 = Pin(latitude: 39.00, longitude: -120.00, context: stack.context)
         
-        let image = UIImage(named: "dog")
-        
+       let image = UIImage(named: "dog")
+    
         let image1 = UIImage(named: "cat")
         
         
@@ -53,13 +53,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let convertedImage1 = UIImagePNGRepresentation(image1!)! as NSData
         
         
-        let photo1 = Photo(image: convertedImage, context: stack.context)
+       let photo1 = Photo(image: convertedImage, context: stack.context)
         
-        let photo2 = Photo(image: convertedImage1, context: stack.context)
+       let photo2 = Photo(image: convertedImage1, context: stack.context)
         
-      //  photo1.pin = pin1
+       photo1.pin = pin1
         
-        //photo2.pin = pin1
+        photo2.pin = pin2
         
         
         stack.save()
