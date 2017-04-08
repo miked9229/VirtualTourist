@@ -15,6 +15,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     
     
     @IBOutlet weak var mapView: MKMapView!
+    var pins: [Pin]!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -31,7 +32,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         
          let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "Pin")
         
-        var pins: [Pin]
         do {
             
             try pins = stack.context.fetch(fr) as! [Pin]
@@ -43,12 +43,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
             
             
         
-   
-        
         print("pins from function: \(pins)")
         
-        fr.sortDescriptors = [NSSortDescriptor(key: "latitude", ascending: true),
-                              NSSortDescriptor(key: "longitude", ascending: true)]
+      //  fr.sortDescriptors = [NSSortDescriptor(key: "latitude", ascending: true),
+        //                      NSSortDescriptor(key: "longitude", ascending: true)]
         
         print(pins[1])
         print(pins[0])
@@ -79,11 +77,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         }
         
   
-        
-        
-    
-      /*   let fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: stack.context, sectionNameKeyPath: nil, cacheName: nil) */
-    
+   
         let pinCount =  try? delegate.stack.context.count(for: NSFetchRequest(entityName: "Pin"))
         let photoCount = try? delegate.stack.context.count(for: NSFetchRequest(entityName: "Photo"))
         print("\(pinCount) Pins Found")
@@ -137,7 +131,47 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         self.mapView.setRegion(region, animated: true)
         
     }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "PinViewController")
+        navigationController?.pushViewController(vc!, animated: true)
+        
+    let doo = Int64((view.annotation?.coordinate.latitude)!)
+        
+        
+    
+    
+    let latitudepredicate = NSPredicate(format: "latitude = %@", "latitude", doo)
+       
+       var newpins: [Pin]!
+        
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = delegate.stack
+    
+        let fetchRequest1 = NSFetchRequest<NSFetchRequestResult>(entityName: "Pin")
+  
+    
+        fetchRequest1.sortDescriptors = [NSSortDescriptor(key: "latitude", ascending: true)]
+        
+        fetchRequest1.predicate = NSPredicate(format: "latitude == %@", (view.annotation?.coordinate.latitude)!)
+        
+        
+        do {
+            
+            try newpins = stack.context.fetch(fetchRequest1) as? [Pin]
+            
+            
+        } catch {
+            newpins = []
+        }
+        
+        
+
+        print(newpins)
+    
+    }
 
 
+    
     
 }
