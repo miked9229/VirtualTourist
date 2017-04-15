@@ -65,7 +65,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <pongPressGestureRecognizer delaysTouchesBegan="YES" delaysTouchesEnded="NO" allowableMovement="1" minimumPressDuration="3" id="JkN-dN-hix">
+                <pongPressGestureRecognizer delaysTouchesBegan="YES" delaysTouchesEnded="NO" allowableMovement="1" minimumPressDuration="1" id="JkN-dN-hix">
                     <connections>
                         <action selector="addPin:" destination="BYZ-38-t0r" id="Kae-yj-Rbl"/>
                     </connections>

@@ -120,33 +120,47 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
 
-        let  fetch =  fetchedResultController.fetchRequest
+
         
-        let latpredicate = NSPredicate(format: "latitude == %f", (view.annotation?.coordinate.latitude)!)
+        let latpredicate = NSPredicate(format: "latitude == %lf", (view.annotation?.coordinate.latitude)!)
         
-        let longpredicate = NSPredicate(format: "longitude == %f", (view.annotation?.coordinate.longitude)!)
+        let longpredicate = NSPredicate(format: "longitude == %lf", (view.annotation?.coordinate.longitude)!)
         
        let andrequest = NSCompoundPredicate(type: .and, subpredicates: [latpredicate, longpredicate])
         
-       fetch.predicate = andrequest
+       fetchedResultController.fetchRequest.predicate = andrequest
         
-        
+        var objects: [Any]?
         do {
             try fetchedResultController.performFetch()
-            print(fetchedResultController.fetchedObjects)
+            objects = fetchedResultController.sections?[0].objects
     
         } catch let err {
             print(err)
 
         }
+       
+        
+        if let objects = objects {
+            
+        for _ in objects {
+//            var pin = each as? Pin
+//            print(pin?.latitude)
+//            print(pin?.longitude)
+//            print(pin?.photos)
+        }
+        
+    }
   
 
-    }
+}
 
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
 
-       // print(anObject)
+       print(anObject)
+       print("There was an updated")
+        
 
     }
     
