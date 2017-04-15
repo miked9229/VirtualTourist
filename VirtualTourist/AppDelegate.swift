@@ -57,14 +57,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
        let photo2 = Photo(image: convertedImage1, context: stack.context)
         
-       photo1.pin = pin1
         
-        photo2.pin = pin2
-        
-        
-        stack.save()
+      pin1.addToPhotos(photo1)
+      pin2.addToPhotos(photo2)
         
 
+        
+        stack.save()
         
 
 

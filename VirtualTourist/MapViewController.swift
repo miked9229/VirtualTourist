@@ -12,103 +12,98 @@ import CoreData
 
 
 class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate  {
-    
-    
+
     @IBOutlet weak var mapView: MKMapView!
+
+    
     var pins: [Pin]!
+    
+    lazy var fetchedResultController: NSFetchedResultsController <NSFetchRequestResult> = {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = delegate.stack
+        let fr = NSFetchRequest<Pin>(entityName: "Pin")
+
+        fr.sortDescriptors = []
+        
+        //   fr.predicate = pred
+        
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: (stack.context), sectionNameKeyPath: nil, cacheName: nil)
+        
+        
+        return fetchedResultsController as! NSFetchedResultsController<NSFetchRequestResult>
+        
+    }()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.mapView.delegate = self
-        
+        self.fetchedResultController.delegate = self
         
         // Set MapView Values From User Defaults
         
         setMapValues()
-
-        
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let stack = delegate.stack
-        
-         let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "Pin")
-        
-        do {
-            
-            try pins = stack.context.fetch(fr) as! [Pin]
-            
-            
-        } catch {
-            pins = []
-        }
-            
-            
-        
-        print("pins from function: \(pins)")
-        
-      //  fr.sortDescriptors = [NSSortDescriptor(key: "latitude", ascending: true),
-        //                      NSSortDescriptor(key: "longitude", ascending: true)]
-        
-        print(pins[1])
-        print(pins[0])
-        
-        
-        let coordinate1 = CLLocationCoordinate2D(latitude: (pins[1].latitude), longitude: (pins[1].longitude))
-        
-        let coordinate0 = CLLocationCoordinate2D(latitude: (pins[0].latitude), longitude: (pins[0].longitude))
-        
-        
-        print(coordinate1)
-        
-        print(coordinate0)
-        
-         let annotation1 = MKPointAnnotation()
-        let annotation2 = MKPointAnnotation()
-        
-        
-        annotation1.coordinate = coordinate1
-        annotation2.coordinate = coordinate0
-        
-        
-        
-        performUIUpdatesOnMain {
-            
-            self.mapView.addAnnotation(annotation1)
-            self.mapView.addAnnotation(annotation2)
-        }
-        
-  
-   
-        let pinCount =  try? delegate.stack.context.count(for: NSFetchRequest(entityName: "Pin"))
-        let photoCount = try? delegate.stack.context.count(for: NSFetchRequest(entityName: "Photo"))
-        print("\(pinCount) Pins Found")
-        print("\(photoCount) Photos Found")
-        
-        
-        
-        
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-    }
 
+    override func viewDidLoad() {
+        var objects: [Any]?
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = delegate.stack
+        super.viewDidLoad()
+        self.mapView.delegate = self
+        
+        do {
+            try fetchedResultController.performFetch()
+          
+            print(123)
+            print(stack)
+            objects = (fetchedResultController.sections?[0].objects)!
+            print(objects)
+        } catch let err {
+            print(err)
+        }
+        if let objects = objects {
+            for each in objects {
+                guard let pin = each as? Pin else {
+                    print("Could not get to pins")
+                    return
+                }
+                let lat = CLLocationDegrees(pin.latitude)
+                let long = CLLocationDegrees(pin.longitude)
+                let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = coordinate
+                mapView.addAnnotation(annotation)
+            }
+            
+        }
+ 
+    }
+    
     @IBAction func addPin(_ sender: UILongPressGestureRecognizer) {
         print(sender.isEnabled)
         instantiatePinAtLocation(sender)
+        
     
     }
 
     public func instantiatePinAtLocation(_ sender: UILongPressGestureRecognizer) {
-       
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = delegate.stack
+        print(stack)
         let location = sender.location(in: mapView)
         let tapPoint = mapView.convert(location, toCoordinateFrom: mapView)
+        let _ = Pin(latitude: tapPoint.latitude, longitude: tapPoint.longitude, context: stack.context)
         let annotation = MKPointAnnotation()
         annotation.coordinate = tapPoint
+        
+        
         mapView.addAnnotation(annotation)
         
         sender.isEnabled = false
         sender.isEnabled = true
+        
+        stack.save()
+
         
     }
     
@@ -133,45 +128,38 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "PinViewController")
-        navigationController?.pushViewController(vc!, animated: true)
-        
-    let doo = Int64((view.annotation?.coordinate.latitude)!)
-        
-        
-    
-    
-    let latitudepredicate = NSPredicate(format: "latitude = %@", "latitude", doo)
-       
-       var newpins: [Pin]!
-        
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let stack = delegate.stack
-    
-        let fetchRequest1 = NSFetchRequest<NSFetchRequestResult>(entityName: "Pin")
+
   
-    
-        fetchRequest1.sortDescriptors = [NSSortDescriptor(key: "latitude", ascending: true)]
+    let fr = NSFetchRequest<Pin>(entityName: "Pin")
+    let delegate = UIApplication.shared.delegate as! AppDelegate
+    let stack = delegate.stack
         
-        fetchRequest1.predicate = NSPredicate(format: "latitude == %@", (view.annotation?.coordinate.latitude)!)
+    print(stack)
+     let latpredicate = NSPredicate(format: "latitude == %f", (view.annotation?.coordinate.latitude)!)
+      let longpredicate = NSPredicate(format: "longitude == %f", (view.annotation?.coordinate.longitude)!)
         
+      let pred = NSCompoundPredicate(andPredicateWithSubpredicates: [latpredicate, longpredicate])
+        
+        fr.sortDescriptors = []
+        fr.predicate = pred
         
         do {
-            
-            try newpins = stack.context.fetch(fetchRequest1) as? [Pin]
-            
-            
-        } catch {
-            newpins = []
+            try fetchedResultController.performFetch()
+              // print(fetchedResultController.sections?[0].objects)
+    
+        } catch let err {
+            print(err)
+
         }
-        
-        
+  
 
-        print(newpins)
-    
     }
-
-
-    
+    public func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+    didChange sectionInfo: NSFetchedResultsSectionInfo,
+    atSectionIndex sectionIndex: Int,
+    for type: NSFetchedResultsChangeType) {
+       
+      print("Method called")
+    }
     
 }

@@ -24,6 +24,7 @@ struct CoreDataStack {
     
     // MARK: Initializers
     
+
     init?(modelName: String) {
         
         // Assumes the model is in the main bundle
