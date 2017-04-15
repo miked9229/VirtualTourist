@@ -65,19 +65,18 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <pongPressGestureRecognizer allowableMovement="1" minimumPressDuration="1" id="JkN-dN-hix">
+                <pongPressGestureRecognizer delaysTouchesBegan="YES" delaysTouchesEnded="NO" allowableMovement="1" minimumPressDuration="3" id="JkN-dN-hix">
                     <connections>
                         <action selector="addPin:" destination="BYZ-38-t0r" id="Kae-yj-Rbl"/>
                     </connections>
                 </pongPressGestureRecognizer>
-                <tapGestureRecognizer id="yjo-fl-slp"/>
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>
         <!--PinViewController-->
         <scene sceneID="S2t-QY-AAF">
             <objects>
-                <viewController storyboardIdentifier="PinViewController" title="PinViewController" id="L7o-Jp-yOl" customClass="PinViewController" customModule="VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PinViewController" title="PinViewController" id="L7o-Jp-yOl" customClass="IndividualPinViewController" customModule="VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="PId-ij-dXC"/>
                         <viewControllerLayoutGuide type="bottom" id="NmS-eo-il6"/>
@@ -85,12 +84,48 @@
                     <view key="view" contentMode="scaleToFill" id="gfx-LX-bV6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Bzg-U3-bhi">
+                                <rect key="frame" x="0.0" y="28" width="375" height="177"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="375" id="F9W-7j-xKq"/>
+                                    <constraint firstAttribute="height" constant="177" id="lpO-g8-t2K"/>
+                                </constraints>
+                            </mapView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0Bf-Fa-CPC">
+                                <rect key="frame" x="0.0" y="202" width="359" height="465"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="TBC-6n-CGe">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="collectioncell" id="q0k-gN-TCw">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Bzg-U3-bhi" firstAttribute="leading" secondItem="gfx-LX-bV6" secondAttribute="leading" id="1Tw-2B-M8E"/>
+                            <constraint firstAttribute="trailing" secondItem="Bzg-U3-bhi" secondAttribute="trailing" id="5IE-Co-2dE"/>
+                            <constraint firstItem="Bzg-U3-bhi" firstAttribute="top" secondItem="PId-ij-dXC" secondAttribute="bottom" constant="8" id="ozh-Co-IYa"/>
+                            <constraint firstItem="NmS-eo-il6" firstAttribute="top" secondItem="Bzg-U3-bhi" secondAttribute="bottom" constant="462" id="teP-9C-W8g"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UBb-Sx-Nsg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="889" y="134"/>
+            <point key="canvasLocation" x="888.79999999999995" y="133.5832083958021"/>
         </scene>
     </scenes>
 </document>

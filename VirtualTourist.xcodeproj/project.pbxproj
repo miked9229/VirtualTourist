@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		922991AE1EA1B5E600AC4A9C /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922991AD1EA1B5E600AC4A9C /* CollectionViewController.swift */; };
 		924457631E9023AC0009F199 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924457621E9023AC0009F199 /* AppDelegate.swift */; };
 		924457681E9023AC0009F199 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 924457661E9023AC0009F199 /* Main.storyboard */; };
 		9244576A1E9023AC0009F199 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 924457691E9023AC0009F199 /* Assets.xcassets */; };
@@ -44,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		922991AD1EA1B5E600AC4A9C /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		9244575F1E9023AC0009F199 /* VirtualTourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualTourist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		924457621E9023AC0009F199 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = VirtualTourist/AppDelegate.swift; sourceTree = "<group>"; };
 		924457671E9023AC0009F199 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				924457921E9027ED0009F199 /* MapViewController.swift */,
 				924457991E9033110009F199 /* NavigationController.swift */,
 				92D3B2221E98496C00ED0C87 /* PinViewController.swift */,
+				922991AD1EA1B5E600AC4A9C /* CollectionViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -332,6 +335,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				922991AE1EA1B5E600AC4A9C /* CollectionViewController.swift in Sources */,
 				924457D21E95D7E10009F199 /* Pin.swift in Sources */,
 				924457931E9027ED0009F199 /* MapViewController.swift in Sources */,
 				924457D01E95D7E10009F199 /* Photo.swift in Sources */,

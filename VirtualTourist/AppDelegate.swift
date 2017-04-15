@@ -32,35 +32,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func preloadData() {
         
-        // Remove previous stuff (if any)
-        do {
-        try stack.dropAllData()
-        } catch {
-            print("Error droping all objects in DB")
-        }
-     
-       let pin1 = Pin(latitude: 39.00, longitude: -95.00, context: stack.context)
-       let pin2 = Pin(latitude: 39.00, longitude: -120.00, context: stack.context)
-        
-       let image = UIImage(named: "dog")
-    
-        let image1 = UIImage(named: "cat")
-        
-        
-        let convertedImage = UIImagePNGRepresentation(image!)! as NSData
-        
-        
-        let convertedImage1 = UIImagePNGRepresentation(image1!)! as NSData
-        
-        
-       let photo1 = Photo(image: convertedImage, context: stack.context)
-        
-       let photo2 = Photo(image: convertedImage1, context: stack.context)
-        
-        
-      pin1.addToPhotos(photo1)
-      pin2.addToPhotos(photo2)
-        
+//       //  Remove previous stuff (if any)
+//        do {
+//        try stack.dropAllData()
+//        } catch {
+//            print("Error droping all objects in DB")
+//        }
+//
+//       let pin1 = Pin(latitude: 39.00, longitude: -95.00, context: stack.context)
+//       let pin2 = Pin(latitude: 39.00, longitude: -120.00, context: stack.context)
+//        
+//       let image = UIImage(named: "dog")
+//    
+//        let image1 = UIImage(named: "cat")
+//        
+//        
+//        let convertedImage = UIImagePNGRepresentation(image!)! as NSData
+//        
+//        
+//        let convertedImage1 = UIImagePNGRepresentation(image1!)! as NSData
+//        
+//        
+//       let photo1 = Photo(image: convertedImage, context: stack.context)
+//        
+//       let photo2 = Photo(image: convertedImage1, context: stack.context)
+//        
+//        
+//      pin1.addToPhotos(photo1)
+//      pin2.addToPhotos(photo2)
+//        
 
         
         stack.save()
