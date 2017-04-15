@@ -122,9 +122,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
 
         let  fetch =  fetchedResultController.fetchRequest
         
-        let latpredicate = NSPredicate(format: "latitude == %a", (view.annotation?.coordinate.latitude)!)
+        let latpredicate = NSPredicate(format: "latitude == %f", (view.annotation?.coordinate.latitude)!)
         
-        let longpredicate = NSPredicate(format: "longitude == %a", (view.annotation?.coordinate.longitude)!)
+        let longpredicate = NSPredicate(format: "longitude == %f", (view.annotation?.coordinate.longitude)!)
         
        // let andrequest = NSCompoundPredicate(type: .and, subpredicates: [latpredicate, longpredicate])
         
