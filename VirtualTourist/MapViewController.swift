@@ -45,6 +45,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         // Set MapView Values From User Defaults
         
         setMapValues()
+       // print(mapView.selectedAnnotations)
     }
     
 
@@ -119,8 +120,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-
-
+        
+        print("method called")
         
         let latpredicate = NSPredicate(format: "latitude == %lf", (view.annotation?.coordinate.latitude)!)
         
@@ -130,32 +131,18 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         
        fetchedResultController.fetchRequest.predicate = andrequest
         
-        var objects: [Any]?
         do {
             try fetchedResultController.performFetch()
-            objects = fetchedResultController.sections?[0].objects
+            
+           passFetchedResulController(fetchcontroller: fetchedResultController)
     
         } catch let err {
             print(err)
 
         }
        
-        
-        if let objects = objects {
-            
-        for _ in objects {
-//            var pin = each as? Pin
-//            print(pin?.latitude)
-//            print(pin?.longitude)
-//            print(pin?.photos)
-        }
-        
-    }
-  
-
 }
 
-    
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
 
        print(anObject)
@@ -181,6 +168,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
             }
         
         }
+    }
+    public func passFetchedResulController(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>) {
+        fetchcontroller.fetchRequest.predicate = nil
+        let controller = storyboard?.instantiateViewController(withIdentifier: "PinViewController")
+        navigationController?.pushViewController(controller!, animated: true)
+        
+    }
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        
     }
 }
 

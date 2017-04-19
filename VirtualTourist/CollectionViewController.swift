@@ -12,7 +12,7 @@ import UIKit
 
 class IndividualPinViewController: UIViewController {
     
-    
+    var fetchedResultController: NSFetchedResultsController <NSFetchRequestResult>!
     
     
     

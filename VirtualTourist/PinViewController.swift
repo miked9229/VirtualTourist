@@ -8,16 +8,23 @@
 
 import Foundation
 import UIKit
+import MapKit
 
 class PinViewController: UIViewController {
     
     var Pin: Pin!
     
+   
+    override func viewDidLoad() {
+        print("Method called")
+    }
+    
+    
     override func viewWillAppear(_ animated: Bool) {
+    
         super.viewWillAppear(animated)
-            let backbutton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(back))
+        let backbutton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(back))
         navigationItem.leftBarButtonItem = backbutton
-        navigationItem.title = ""
         
     }
     
