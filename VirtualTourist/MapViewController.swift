@@ -25,18 +25,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let stack = delegate.stack
         let fr = NSFetchRequest<Pin>(entityName: "Pin")
-        
         let sortDescriptor1 = NSSortDescriptor(key: "latitude" , ascending: true)
         let sortDescriptor2 = NSSortDescriptor(key: "longitude" , ascending: true)
         fr.sortDescriptors = [sortDescriptor1, sortDescriptor2]
-        
-
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: (stack.context), sectionNameKeyPath: nil, cacheName: nil)
-        
-        
         return fetchedResultsController as! NSFetchedResultsController<NSFetchRequestResult>
-        
     }()
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -45,10 +40,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         // Set MapView Values From User Defaults
         
         setMapValues()
-       // print(mapView.selectedAnnotations)
+        
+        checkSelectedAnnotations()
+        //
+ 
     }
     
-
     override func viewDidLoad() {
         var objects: [Any]?
         let delegate = UIApplication.shared.delegate as! AppDelegate
@@ -67,7 +64,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         
     }
  
-
     
     @IBAction func addPin(_ sender: UILongPressGestureRecognizer) {
         instantiatePinAtLocation(sender)
@@ -175,8 +171,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         navigationController?.pushViewController(controller!, animated: true)
         
     }
-    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+    
+    
+    public func checkSelectedAnnotations() {
+        if !(mapView.selectedAnnotations.isEmpty) {
+
+            mapView.deselectAnnotation(mapView.selectedAnnotations[0], animated: true)
+        }
         
     }
+    
 }
 
