@@ -126,7 +126,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
 }
 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-            print(anObject)
+//            print(anObject)
     }
 
 
@@ -175,10 +175,24 @@ extension MapViewController {
     
     
     public func passFetchedResulController(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>) {
-        FlickrClient.sharedInstance().getPhotos(latitude: returnLatitudeOrLongitude(fetchcontroller: fetchcontroller, latOrLong: "lat"), longitude: returnLatitudeOrLongitude(fetchcontroller: fetchcontroller, latOrLong: "long"))
-        let controller = storyboard?.instantiateViewController(withIdentifier: "IndividualPinViewController") as! IndividualPinViewController
-        controller.fetchedResultController = fetchcontroller
-        navigationController?.pushViewController(controller, animated: true)
+        FlickrClient.sharedInstance().getPhotos(latitude: returnLatitudeOrLongitude(fetchcontroller: fetchcontroller, latOrLong: "lat"), longitude: returnLatitudeOrLongitude(fetchcontroller: fetchcontroller, latOrLong: "long")) {(sucess, data, error) in
+            
+            if sucess {
+                
+                performUIUpdatesOnMain {
+                    let controller = self.storyboard?.instantiateViewController(withIdentifier:"IndividualPinViewController") as! IndividualPinViewController
+                    controller.fetchedResultController = fetchcontroller
+                    self.navigationController?.pushViewController(controller, animated: true)
+                }
+
+            } else {
+                print("There was an error")
+            }
+            
+            
+            
+        }
+ 
         
     }
 

@@ -36,6 +36,7 @@ struct Constants {
         static let ResponseFormat = "json"
         static let DisableJSONCallback = "1" /* 1 means "yes" */
         static let PhotosSearchMethod = "flickr.photos.search"
+        static let url_m = "url_m"
 
     }
     
@@ -51,5 +52,11 @@ struct Constants {
     // MARK: Flickr Response Values
     struct FlickrResponseValues {
         static let OKStatus = "ok"
+    }
+    
+    //MARK: Largest Longitude and Latitude
+    struct Maximums {
+        static let LatitudeMaximumDeviation = 5.00
+        static let LongitudeMaximumDeviation = 5.00
     }
 }
