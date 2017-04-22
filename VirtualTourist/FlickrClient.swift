@@ -22,16 +22,16 @@ class FlickrClient {
                                 Constants.FlickrParameterKeys.longitude: longitude,
                                 Constants.FlickrParameterKeys.Format: Constants.FlickrParameterValues.ResponseFormat,
                                 Constants.FlickrParameterKeys.NoJSONCallback: Constants.FlickrParameterValues.DisableJSONCallback,
-                                Constants.FlickrParameterKeys.radius: 5] as [String : Any]
+                                Constants.FlickrParameterKeys.bbox: "-180,-90,180,90"] as [String : Any]
         
         
         // create url and request
-        let session = URLSession.shared
+    //    let session = URLSession.shared
         let urlString = Constants.Flickr.APIBaseURL + escapedParameters(methodParameters as [String:AnyObject])
         print(urlString)
         let url = URL(string: urlString)!
         print(url)
-        let request = URLRequest(url: url)
+       // let request = URLRequest(url: url)
         
 
 

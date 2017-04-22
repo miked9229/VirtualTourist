@@ -26,6 +26,7 @@ struct Constants {
         static let NoJSONCallback = "nojsoncallback"
         static let latitude = "lat"
         static let longitude = "long"
+        static let bbox = "bbox"
         static let radius = "radius"
     }
     
