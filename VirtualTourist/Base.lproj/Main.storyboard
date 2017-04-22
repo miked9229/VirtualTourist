@@ -70,10 +70,10 @@
             </objects>
             <point key="canvasLocation" x="322" y="134"/>
         </scene>
-        <!--Pin View Controller-->
+        <!--Individual Pin View Controller-->
         <scene sceneID="S2t-QY-AAF">
             <objects>
-                <viewController storyboardIdentifier="PinViewController" id="L7o-Jp-yOl" customClass="PinViewController" customModule="VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="IndividualPinViewController" id="L7o-Jp-yOl" customClass="IndividualPinViewController" customModule="VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="PId-ij-dXC"/>
                         <viewControllerLayoutGuide type="bottom" id="NmS-eo-il6"/>
@@ -107,17 +107,32 @@
                                         </view>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="L7o-Jp-yOl" id="J5s-4y-Dmg"/>
+                                    <outlet property="delegate" destination="L7o-Jp-yOl" id="ZAs-JM-HaR"/>
+                                </connections>
                             </collectionView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tdy-z9-bTx">
+                                <rect key="frame" x="0.0" y="559" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="PHS-vp-7OT"/>
+                                    <barButtonItem title="New Collection" id="iSc-ah-x8D"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="V76-dn-Vql"/>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="suV-Lx-Zji" firstAttribute="top" secondItem="aub-wn-CSa" secondAttribute="bottom" constant="8" id="3Ht-WD-kSL"/>
                             <constraint firstItem="suV-Lx-Zji" firstAttribute="leading" secondItem="gfx-LX-bV6" secondAttribute="leadingMargin" constant="-16" id="8ya-Dn-Mqv"/>
                             <constraint firstItem="aub-wn-CSa" firstAttribute="leading" secondItem="gfx-LX-bV6" secondAttribute="leading" id="LJj-Wj-ZGP"/>
+                            <constraint firstItem="NmS-eo-il6" firstAttribute="top" secondItem="Tdy-z9-bTx" secondAttribute="bottom" id="Myj-Jc-r4D"/>
                             <constraint firstItem="NmS-eo-il6" firstAttribute="top" secondItem="suV-Lx-Zji" secondAttribute="bottom" constant="8" id="Nar-Mv-hye"/>
                             <constraint firstAttribute="trailingMargin" secondItem="suV-Lx-Zji" secondAttribute="trailing" constant="-16" id="Ogv-3K-EJ8"/>
+                            <constraint firstItem="Tdy-z9-bTx" firstAttribute="leading" secondItem="gfx-LX-bV6" secondAttribute="leadingMargin" constant="-16" id="PqB-uA-VK4"/>
                             <constraint firstAttribute="trailing" secondItem="aub-wn-CSa" secondAttribute="trailing" id="i9U-e4-MQt"/>
                             <constraint firstItem="aub-wn-CSa" firstAttribute="top" secondItem="PId-ij-dXC" secondAttribute="bottom" id="o0S-VE-CJ4"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Tdy-z9-bTx" secondAttribute="trailing" constant="-16" id="rts-gC-YTg"/>
                         </constraints>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>

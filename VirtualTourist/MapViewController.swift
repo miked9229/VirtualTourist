@@ -20,6 +20,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
 
     
     var pins: [Pin]!
+
     
     lazy var fetchedResultController: NSFetchedResultsController <NSFetchRequestResult> = {
         let delegate = UIApplication.shared.delegate as! AppDelegate
@@ -40,10 +41,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         // Set MapView Values From User Defaults
         
         setMapValues()
-        
         checkSelectedAnnotations()
-        //
- 
+        
     }
     
     override func viewDidLoad() {
@@ -73,7 +72,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
 
     public func instantiatePinAtLocation(_ sender: UILongPressGestureRecognizer) {
         if sender.state == .began {
-            print("method called")
+
             let delegate = UIApplication.shared.delegate as! AppDelegate
             let stack = delegate.stack
             let location = sender.location(in: mapView)
@@ -91,8 +90,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
                 
         }
    
-
-        
     }
     
     public func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
@@ -103,21 +100,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         UserDefaults.standard.set(mapView.region.span.longitudeDelta, forKey: "longitudeDeltaKey")
     }
     
-    public func setMapValues() {
-        
-        let span = MKCoordinateSpanMake(UserDefaults.standard.double(forKey: "latitudeDeltaKey"), UserDefaults.standard.double(forKey: "longitudeDeltaKey"))
-        
-        let location = CLLocationCoordinate2D(latitude: UserDefaults.standard.double(forKey: "latitudeKey"), longitude: UserDefaults.standard.double(forKey: "longitudeKey"))
-        
-        let region = MKCoordinateRegion(center: location, span: span)
-        
-        self.mapView.setRegion(region, animated: true)
-        
-    }
+
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         
-        print("method called")
         
         let latpredicate = NSPredicate(format: "latitude == %lf", (view.annotation?.coordinate.latitude)!)
         
@@ -140,39 +126,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
 }
 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+            print(anObject)
+    }
 
-       print(anObject)
-       print("There was an updated")
-        
 
-    }
-    
-    public func AddPins(objects: [Any]?) {
-        
-        if let objects = objects {
-            for each in objects {
-                guard let pin = each as? Pin else {
-                    print("Could not get to pins")
-                    return
-            }
-                let lat = CLLocationDegrees(pin.latitude)
-                let long = CLLocationDegrees(pin.longitude)
-                let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                let annotation = MKPointAnnotation()
-                annotation.coordinate = coordinate
-                mapView.addAnnotation(annotation)
-            }
-        
-        }
-    }
-    public func passFetchedResulController(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>) {
-        fetchcontroller.fetchRequest.predicate = nil
-        let controller = storyboard?.instantiateViewController(withIdentifier: "PinViewController")
-        navigationController?.pushViewController(controller!, animated: true)
-        
-    }
-    
-    
     public func checkSelectedAnnotations() {
         if !(mapView.selectedAnnotations.isEmpty) {
 
@@ -182,4 +139,67 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     }
     
 }
+
+extension MapViewController {
+    
+    public func AddPins(objects: [Any]?) {
+        
+        if let objects = objects {
+            for each in objects {
+                guard let pin = each as? Pin else {
+                    print("Could not get to pins")
+                    return
+                }
+                let lat = CLLocationDegrees(pin.latitude)
+                let long = CLLocationDegrees(pin.longitude)
+                let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = coordinate
+                mapView.addAnnotation(annotation)
+            }
+            
+        }
+    }
+
+    public func setMapValues() {
+        
+        let span = MKCoordinateSpanMake(UserDefaults.standard.double(forKey: "latitudeDeltaKey"), UserDefaults.standard.double(forKey: "longitudeDeltaKey"))
+        
+        let location = CLLocationCoordinate2D(latitude: UserDefaults.standard.double(forKey: "latitudeKey"), longitude: UserDefaults.standard.double(forKey: "longitudeKey"))
+        
+        let region = MKCoordinateRegion(center: location, span: span)
+        
+        self.mapView.setRegion(region, animated: true)
+        
+    }
+    
+    
+    public func passFetchedResulController(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>) {
+        FlickrClient.sharedInstance().getPhotos(latitude: returnLatitudeOrLongitude(fetchcontroller: fetchcontroller, latOrLong: "lat"), longitude: returnLatitudeOrLongitude(fetchcontroller: fetchcontroller, latOrLong: "long"))
+        let controller = storyboard?.instantiateViewController(withIdentifier: "IndividualPinViewController") as! IndividualPinViewController
+        controller.fetchedResultController = fetchcontroller
+        navigationController?.pushViewController(controller, animated: true)
+        
+    }
+
+    public func returnLatitudeOrLongitude(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>, latOrLong: String) -> Double {
+        
+        
+        let pin = (fetchcontroller.sections?[0].objects)?[0] as! Pin
+        if latOrLong == "lat" {
+          
+             return pin.latitude
+            
+        }
+        else {
+            return pin.longitude
+        }
+        
+
+    }
+
+    
+
+}
+
 
