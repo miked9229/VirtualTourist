@@ -72,7 +72,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
             let stack = delegate.stack
             let location = sender.location(in: mapView)
             let tapPoint = mapView.convert(location, toCoordinateFrom: mapView)
-            let _ = Pin(latitude: tapPoint.latitude, longitude: tapPoint.longitude, context: stack.context)
+            let _ = Pin(latitude: tapPoint.latitude, longitude: tapPoint.longitude, isDownloaded: false, context: stack.context)
             let annotation = MKPointAnnotation()
             annotation.coordinate = tapPoint
             
@@ -132,7 +132,6 @@ extension MapViewController {
         if let objects = objects {
             for each in objects {
                 guard let pin = each as? Pin else {
-                    print("Could not get to pins")
                     return
                 }
                 let lat = CLLocationDegrees(pin.latitude)
@@ -160,6 +159,13 @@ extension MapViewController {
     
     
     public func passFetchedResulController(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>) {
+        
+        
+        var pin = fetchcontroller.sections?[0].objects?[0] as! Pin
+        
+        print(pin.isDownloaded)
+        
+        
         FlickrClient.sharedInstance().getPhotos(latitude: returnLatitudeOrLongitude(fetchcontroller: fetchcontroller, latOrLong: "lat"), longitude: returnLatitudeOrLongitude(fetchcontroller: fetchcontroller, latOrLong: "long")) {(sucess, data, error) in
             
            
@@ -209,21 +215,18 @@ extension MapViewController {
                     return
                 }
                 for eachPhoto in data  {
-                    var photoString = eachPhoto[Constants.FlickrParameterValues.url_m] as! String
-                    var photoURL = URL(string: photoString)
-//                   var photo = UIImage(named: photoURL)
-//                    print(photo)
+                    let photoString = eachPhoto[Constants.FlickrParameterValues.url_m] as! String
+                    let photoURL = URL(string: photoString)
             
                     if let imageData = try? Data(contentsOf: photoURL!) {
                         print(imageData)
                         pin.addToPhotos(Photo(image: imageData as NSData, context: stack.context))
-               
 
-                    } else {
-                        
-                    }
+                }
      
             }
+                pin.isDownloaded = true
+            
             
         }
 

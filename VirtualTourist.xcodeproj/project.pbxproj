@@ -15,7 +15,6 @@
 		924457781E9023AC0009F199 /* VirtualTouristTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924457771E9023AC0009F199 /* VirtualTouristTests.swift */; };
 		924457831E9023AC0009F199 /* VirtualTouristUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924457821E9023AC0009F199 /* VirtualTouristUITests.swift */; };
 		924457931E9027ED0009F199 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924457921E9027ED0009F199 /* MapViewController.swift */; };
-		9244579C1E904C180009F199 /* MapLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9244579B1E904C180009F199 /* MapLocations.swift */; };
 		924457A11E9480C50009F199 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924457A01E9480C50009F199 /* CoreDataStack.swift */; };
 		924457CB1E95D6FC0009F199 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 924457C91E95D6FC0009F199 /* Model.xcdatamodeld */; };
 		924457D01E95D7E10009F199 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924457CC1E95D7E10009F199 /* Photo.swift */; };
@@ -61,7 +60,6 @@
 		924457821E9023AC0009F199 /* VirtualTouristUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualTouristUITests.swift; sourceTree = "<group>"; };
 		924457841E9023AC0009F199 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		924457921E9027ED0009F199 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		9244579B1E904C180009F199 /* MapLocations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLocations.swift; sourceTree = "<group>"; };
 		924457A01E9480C50009F199 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		924457CA1E95D6FC0009F199 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		924457CC1E95D7E10009F199 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Photo.swift; path = ../Photo.swift; sourceTree = "<group>"; };
@@ -74,6 +72,7 @@
 		92C5088A1EAAC18000F6E6A5 /* FlickrClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrClient.swift; sourceTree = "<group>"; };
 		92C5088C1EAADD8E00F6E6A5 /* FlickrConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrConstants.swift; sourceTree = "<group>"; };
 		92C5088E1EABD9D000F6E6A5 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		92C508911EAD1FA000F6E6A5 /* Model4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model4.xcdatamodel; sourceTree = "<group>"; };
 		92D3B2221E98496C00ED0C87 /* PinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -189,7 +188,6 @@
 		924457951E902FEB0009F199 /* HelperClasesAndStruct */ = {
 			isa = PBXGroup;
 			children = (
-				9244579B1E904C180009F199 /* MapLocations.swift */,
 			);
 			name = HelperClasesAndStruct;
 			sourceTree = "<group>";
@@ -371,7 +369,6 @@
 				924457631E9023AC0009F199 /* AppDelegate.swift in Sources */,
 				92C5088B1EAAC18000F6E6A5 /* FlickrClient.swift in Sources */,
 				92D3B2231E98496C00ED0C87 /* PinViewController.swift in Sources */,
-				9244579C1E904C180009F199 /* MapLocations.swift in Sources */,
 				924457D11E95D7E10009F199 /* Photo+CoreDataProperties.swift in Sources */,
 				924457CB1E95D6FC0009F199 /* Model.xcdatamodeld in Sources */,
 			);
@@ -648,11 +645,12 @@
 		924457C91E95D6FC0009F199 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				92C508911EAD1FA000F6E6A5 /* Model4.xcdatamodel */,
 				92C508881EAA38B000F6E6A5 /* Model3.xcdatamodel */,
 				92C508871EAA376E00F6E6A5 /* Model 2.xcdatamodel */,
 				924457CA1E95D6FC0009F199 /* Model.xcdatamodel */,
 			);
-			currentVersion = 92C508881EAA38B000F6E6A5 /* Model3.xcdatamodel */;
+			currentVersion = 92C508911EAD1FA000F6E6A5 /* Model4.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
