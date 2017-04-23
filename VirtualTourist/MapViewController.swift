@@ -33,8 +33,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         super.viewWillAppear(animated)
         self.fetchedResultController.delegate = self
         
-        // Set MapView Values From User Defaults
-        
+   
         setMapValues()
         checkSelectedAnnotations()
         
@@ -110,11 +109,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
        
 }
 
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-//            print(anObject)
-    }
-
-
     public func checkSelectedAnnotations() {
         if !(mapView.selectedAnnotations.isEmpty) {
 
@@ -160,34 +154,21 @@ extension MapViewController {
     
     public func passFetchedResulController(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>) {
         
+        let pin = fetchcontroller.sections?[0].objects?[0] as! Pin
         
-        var pin = fetchcontroller.sections?[0].objects?[0] as! Pin
-        
-        print(pin.isDownloaded)
-        
-        
-        FlickrClient.sharedInstance().getPhotos(latitude: returnLatitudeOrLongitude(fetchcontroller: fetchcontroller, latOrLong: "lat"), longitude: returnLatitudeOrLongitude(fetchcontroller: fetchcontroller, latOrLong: "long")) {(sucess, data, error) in
+        if pin.isDownloaded {
+            MoveToPinViewController(fetchcontroller: fetchcontroller)
+  
             
-           
-            
-                if let data = data {
-                    self.appendToPin(data: data, fetchcontroller: fetchcontroller)
-                    
-                
-              
-                performUIUpdatesOnMain {
-                    let controller = self.storyboard?.instantiateViewController(withIdentifier:"IndividualPinViewController") as! IndividualPinViewController
-                    controller.fetchedResultController = fetchcontroller
-                    self.navigationController?.pushViewController(controller, animated: true)
-                }
-
-            }
- 
-        
         }
+        else {
+            NetworkingHelpers().backgroundLoad(fetchcontroller: fetchcontroller)
+            MoveToPinViewController(fetchcontroller: fetchcontroller)
+
+        }
+  
     }
         
-
     public func returnLatitudeOrLongitude(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>, latOrLong: String) -> Double {
         
         
@@ -204,36 +185,6 @@ extension MapViewController {
 
     }
 
-    public func appendToPin(data: [[String: AnyObject]], fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>) {
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let stack = delegate.stack
-        
-        if let object = fetchcontroller.sections?[0].objects {
-            for each in object {
-                guard let pin = each as? Pin else {
-                    print("Could not get to pins")
-                    return
-                }
-                for eachPhoto in data  {
-                    let photoString = eachPhoto[Constants.FlickrParameterValues.url_m] as! String
-                    let photoURL = URL(string: photoString)
-            
-                    if let imageData = try? Data(contentsOf: photoURL!) {
-                        print(imageData)
-                        pin.addToPhotos(Photo(image: imageData as NSData, context: stack.context))
-
-                }
-     
-            }
-                pin.isDownloaded = true
-            
-            
-        }
-
-            
-    }
-}
-    
     public func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
         
         UserDefaults.standard.set(mapView.region.center.latitude, forKey: "latitudeKey")
@@ -242,8 +193,16 @@ extension MapViewController {
         UserDefaults.standard.set(mapView.region.span.longitudeDelta, forKey: "longitudeDeltaKey")
     }
     
+    public func MoveToPinViewController(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>) {
+        let controller = self.storyboard?.instantiateViewController(withIdentifier:"IndividualPinViewController") as! IndividualPinViewController
+        controller.fetchedResultController = fetchcontroller
+        self.navigationController?.pushViewController(controller, animated: true)
+        
+    }
+
     
 
 }
+
 
 

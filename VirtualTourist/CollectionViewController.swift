@@ -21,6 +21,8 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
     override func viewDidLoad() {
         self.imageCollectionView.delegate = self
         self.imageCollectionView.dataSource = self
+        self.fetchedResultController.delegate = self
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,9 +63,10 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
         
         cell.myImageView.image =  image
         
-    
         return cell
     }
+    
+    
 
     
 }
@@ -114,6 +117,16 @@ extension IndividualPinViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return sectionInsets.left
+    }
+    
+}
+extension IndividualPinViewController: NSFetchedResultsControllerDelegate {
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+            if type.rawValue == 4 {
+                self.imageCollectionView.reloadData()
+            
+        }
     }
     
 }

@@ -25,6 +25,7 @@
 		92C5088B1EAAC18000F6E6A5 /* FlickrClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C5088A1EAAC18000F6E6A5 /* FlickrClient.swift */; };
 		92C5088D1EAADD8E00F6E6A5 /* FlickrConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C5088C1EAADD8E00F6E6A5 /* FlickrConstants.swift */; };
 		92C5088F1EABD9D000F6E6A5 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C5088E1EABD9D000F6E6A5 /* ImageCollectionViewCell.swift */; };
+		92C508941EAD506C00F6E6A5 /* NetworkingHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C508931EAD506C00F6E6A5 /* NetworkingHelpers.swift */; };
 		92D3B2231E98496C00ED0C87 /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D3B2221E98496C00ED0C87 /* PinViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +74,7 @@
 		92C5088C1EAADD8E00F6E6A5 /* FlickrConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrConstants.swift; sourceTree = "<group>"; };
 		92C5088E1EABD9D000F6E6A5 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		92C508911EAD1FA000F6E6A5 /* Model4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model4.xcdatamodel; sourceTree = "<group>"; };
+		92C508931EAD506C00F6E6A5 /* NetworkingHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkingHelpers.swift; sourceTree = "<group>"; };
 		92D3B2221E98496C00ED0C87 /* PinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -195,6 +197,7 @@
 		92C508891EAA7CA200F6E6A5 /* Helper Classes */ = {
 			isa = PBXGroup;
 			children = (
+				92C508931EAD506C00F6E6A5 /* NetworkingHelpers.swift */,
 			);
 			name = "Helper Classes";
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 				924457D31E95D7E10009F199 /* Pin+CoreDataProperties.swift in Sources */,
 				92C5088F1EABD9D000F6E6A5 /* ImageCollectionViewCell.swift in Sources */,
 				924457D51E96EABD0009F199 /* GCDBlackBox.swift in Sources */,
+				92C508941EAD506C00F6E6A5 /* NetworkingHelpers.swift in Sources */,
 				924457A11E9480C50009F199 /* CoreDataStack.swift in Sources */,
 				924457631E9023AC0009F199 /* AppDelegate.swift in Sources */,
 				92C5088B1EAAC18000F6E6A5 /* FlickrClient.swift in Sources */,
