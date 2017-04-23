@@ -13,15 +13,15 @@ import MapKit
 
 class IndividualPinViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    
-
+    @IBOutlet weak var imageCollectionView: UICollectionView!
+    fileprivate let itemsPerRow: CGFloat = 3
+    fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
     var fetchedResultController: NSFetchedResultsController <NSFetchRequestResult>!
     
-    
     override func viewDidLoad() {
-        print("Method called")
+        self.imageCollectionView.delegate = self
+        self.imageCollectionView.dataSource = self
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         
@@ -36,7 +36,6 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
     }
     
     
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return photoCount(objects: fetchedResultController.sections?[0].objects)
@@ -44,7 +43,25 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = UICollectionViewCell()
+       
+        var photosArray: [Any]! = nil
+
+        if let objects = fetchedResultController.sections?[0].objects {
+            let pin = objects[0] as! Pin
+            photosArray = (pin.photos?.allObjects)!
+          
+        }
+
+        let photo = photosArray[indexPath.row] as? Photo
+        
+        let image = UIImage(data: photo?.nsData as! Data)
+        
+
+        let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! ImageCollectionViewCell
+        
+        cell.myImageView.image =  image
+        
+    
         return cell
     }
 
@@ -53,7 +70,6 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
 
 
 extension IndividualPinViewController {
-    
     
     public func photoCount(objects: [Any]?) -> Int {
         print("Photo Count Method called")
@@ -75,5 +91,29 @@ extension IndividualPinViewController {
         return 0
     }
 
+}
+extension IndividualPinViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        //2
+        let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
+        let availableWidth = view.frame.width - paddingSpace
+        let widthPerItem = availableWidth / itemsPerRow
+        
+        return CGSize(width: widthPerItem, height: widthPerItem)
+    }
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
+        return sectionInsets
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return sectionInsets.left
+    }
     
 }

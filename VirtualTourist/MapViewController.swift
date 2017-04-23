@@ -16,11 +16,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     @IBOutlet weak var mapView: MKMapView!
     var annotationView: MKAnnotationView?
     
-    var count = 0
-
-    
-    var pins: [Pin]!
-
     
     lazy var fetchedResultController: NSFetchedResultsController <NSFetchRequestResult> = {
         let delegate = UIApplication.shared.delegate as! AppDelegate
@@ -91,16 +86,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         }
    
     }
-    
-    public func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-  
-        UserDefaults.standard.set(mapView.region.center.latitude, forKey: "latitudeKey")
-        UserDefaults.standard.set(mapView.region.center.longitude, forKey: "longitudeKey")
-        UserDefaults.standard.set(mapView.region.span.latitudeDelta, forKey: "latitudeDeltaKey")
-        UserDefaults.standard.set(mapView.region.span.longitudeDelta, forKey: "longitudeDeltaKey")
-    }
-    
-
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         
@@ -177,24 +162,25 @@ extension MapViewController {
     public func passFetchedResulController(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>) {
         FlickrClient.sharedInstance().getPhotos(latitude: returnLatitudeOrLongitude(fetchcontroller: fetchcontroller, latOrLong: "lat"), longitude: returnLatitudeOrLongitude(fetchcontroller: fetchcontroller, latOrLong: "long")) {(sucess, data, error) in
             
-            if sucess {
+           
+            
+                if let data = data {
+                    self.appendToPin(data: data, fetchcontroller: fetchcontroller)
+                    
                 
+              
                 performUIUpdatesOnMain {
                     let controller = self.storyboard?.instantiateViewController(withIdentifier:"IndividualPinViewController") as! IndividualPinViewController
                     controller.fetchedResultController = fetchcontroller
                     self.navigationController?.pushViewController(controller, animated: true)
                 }
 
-            } else {
-                print("There was an error")
             }
-            
-            
-            
-        }
  
         
+        }
     }
+        
 
     public func returnLatitudeOrLongitude(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>, latOrLong: String) -> Double {
         
@@ -212,6 +198,47 @@ extension MapViewController {
 
     }
 
+    public func appendToPin(data: [[String: AnyObject]], fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>) {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = delegate.stack
+        
+        if let object = fetchcontroller.sections?[0].objects {
+            for each in object {
+                guard let pin = each as? Pin else {
+                    print("Could not get to pins")
+                    return
+                }
+                for eachPhoto in data  {
+                    var photoString = eachPhoto[Constants.FlickrParameterValues.url_m] as! String
+                    var photoURL = URL(string: photoString)
+//                   var photo = UIImage(named: photoURL)
+//                    print(photo)
+            
+                    if let imageData = try? Data(contentsOf: photoURL!) {
+                        print(imageData)
+                        pin.addToPhotos(Photo(image: imageData as NSData, context: stack.context))
+               
+
+                    } else {
+                        
+                    }
+     
+            }
+            
+        }
+
+            
+    }
+}
+    
+    public func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+        
+        UserDefaults.standard.set(mapView.region.center.latitude, forKey: "latitudeKey")
+        UserDefaults.standard.set(mapView.region.center.longitude, forKey: "longitudeKey")
+        UserDefaults.standard.set(mapView.region.span.latitudeDelta, forKey: "latitudeDeltaKey")
+        UserDefaults.standard.set(mapView.region.span.longitudeDelta, forKey: "longitudeDeltaKey")
+    }
+    
     
 
 }

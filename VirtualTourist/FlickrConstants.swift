@@ -28,6 +28,7 @@ struct Constants {
         static let longitude = "long"
         static let bbox = "bbox"
         static let radius = "radius"
+        static let per_page = "per_page"
     }
     
     // MARK: Flickr Parameter Values
@@ -37,6 +38,7 @@ struct Constants {
         static let DisableJSONCallback = "1" /* 1 means "yes" */
         static let PhotosSearchMethod = "flickr.photos.search"
         static let url_m = "url_m"
+        static let per_page_limit = "30"
 
     }
     

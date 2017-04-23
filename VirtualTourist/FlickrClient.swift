@@ -12,7 +12,7 @@ class FlickrClient {
     
     var session = URLSession.shared
     
-    public func getPhotos(latitude: Double, longitude: Double, _ completionHandlerForGetPhotos: @escaping (_ success: Bool, _ data: [String: AnyObject]?, _ error: String?) -> Void) {
+    public func getPhotos(latitude: Double, longitude: Double, _ completionHandlerForGetPhotos: @escaping (_ success: Bool, _ data: [[String: AnyObject]]?, _ error: String?) -> Void) {
 
         
         let methodParameters = [Constants.FlickrParameterKeys.Method:
@@ -24,7 +24,9 @@ class FlickrClient {
                                 Constants.FlickrParameterKeys.Format: Constants.FlickrParameterValues.ResponseFormat,
                                 Constants.FlickrParameterKeys.NoJSONCallback: Constants.FlickrParameterValues.DisableJSONCallback,
                                 Constants.FlickrParameterKeys.bbox: returnBbox(latitude: latitude, longitude: longitude),
-                                Constants.FlickrParameterKeys.Extras: Constants.FlickrParameterValues.url_m] as [String : Any]
+                                Constants.FlickrParameterKeys.Extras: Constants.FlickrParameterValues.url_m,
+                                Constants.FlickrParameterKeys.per_page: Constants.FlickrParameterValues.per_page_limit]
+            as [String : Any]
         
         
         // create url and request
@@ -62,21 +64,25 @@ class FlickrClient {
                 print("Could not parse JSON data")
                 
             }
-            completionHandlerForGetPhotos(true, parsedResult, nil)
-         
-            
 
             
-            
+            guard let photoDictionary = parsedResult[Constants.FlickrResponseKeys.Photos] as? [String:AnyObject], let photoArray = photoDictionary[Constants.FlickrResponseKeys.Photo] as? [[String:AnyObject]] else {
+                return
             }
+            
+            completionHandlerForGetPhotos(true, photoArray, nil)
+ 
+         
+
+        }
         task.resume()
         
             
-        }
+    }
         
 
 
-    }
+}
 
 extension FlickrClient {
     public func escapedParameters(_ parameters: [String:AnyObject]) -> String {

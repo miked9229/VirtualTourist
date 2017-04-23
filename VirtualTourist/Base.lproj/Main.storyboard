@@ -92,19 +92,33 @@
                                 <rect key="frame" x="0.0" y="159" width="375" height="436"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="X0Q-9a-7c3">
-                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="itemSize" width="107" height="76"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionCell" id="wUY-3I-h8l">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionCell" id="wUY-3I-h8l" customClass="ImageCollectionViewCell" customModule="VirtualTourist" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="107" height="76"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="107" height="76"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yuq-S6-SZb">
+                                                    <rect key="frame" x="8" y="0.0" width="99" height="76"/>
+                                                </imageView>
+                                            </subviews>
                                         </view>
+                                        <constraints>
+                                            <constraint firstAttribute="trailingMargin" secondItem="yuq-S6-SZb" secondAttribute="trailing" constant="-8" id="3ok-Nr-61V"/>
+                                            <constraint firstAttribute="leadingMargin" secondItem="yuq-S6-SZb" secondAttribute="leading" id="X4d-IV-OJh"/>
+                                            <constraint firstItem="yuq-S6-SZb" firstAttribute="top" secondItem="wUY-3I-h8l" secondAttribute="topMargin" constant="-8" id="fe5-fG-2Ix"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="yuq-S6-SZb" secondAttribute="bottom" constant="-8" id="sWL-8t-SwF"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="myImageView" destination="yuq-S6-SZb" id="NZc-hO-tc4"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
@@ -136,6 +150,9 @@
                         </constraints>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <connections>
+                        <outlet property="imageCollectionView" destination="suV-Lx-Zji" id="6oZ-ph-KFh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UBb-Sx-Nsg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
