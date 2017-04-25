@@ -29,6 +29,19 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
         
     }
     
+    @IBAction func newCollection(_ sender: Any) {
+        
+        let pin = fetchedResultController.sections?[0].objects?[0] as! Pin
+        
+        pin.photos = nil
+    
+        NetworkingHelpers().backgroundLoad(fetchcontroller: fetchedResultController)
+        
+    
+    
+    
+    
+    }
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
@@ -55,7 +68,6 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
       
         let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! ImageCollectionViewCell
  
-
         
         if let objects = fetchedResultController.sections?[0].objects {
             let pin = objects[0] as! Pin
