@@ -71,6 +71,7 @@ class FlickrClient {
                 return
             }
             
+            
             completionHandlerForGetPhotos(true, photoArray, nil)
         
          

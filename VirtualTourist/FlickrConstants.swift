@@ -61,4 +61,9 @@ struct Constants {
         static let LatitudeMaximumDeviation = 5.00
         static let LongitudeMaximumDeviation = 5.00
     }
+    
+    struct alphaLevels {
+        static let alphalevelLower = 0.25
+        static let alphalevelNormal = 1.00
+    }
 }

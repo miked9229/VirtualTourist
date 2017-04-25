@@ -57,12 +57,12 @@ class NetworkingHelpers {
                     print("Could not get to pins")
                     return
                 }
+                
                 for eachPhoto in data  {
                     let photoString = eachPhoto[Constants.FlickrParameterValues.url_m] as! String
                     let photoURL = URL(string: photoString)
                     
                     if let imageData = try? Data(contentsOf: photoURL!) {
-                        print(imageData)
                         pin.addToPhotos(Photo(image: imageData as NSData, context: stack.context))
                         
                     }

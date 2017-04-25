@@ -152,6 +152,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="imageCollectionView" destination="suV-Lx-Zji" id="6oZ-ph-KFh"/>
+                        <outlet property="mapView" destination="aub-wn-CSa" id="3xo-lt-Cko"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UBb-Sx-Nsg" userLabel="First Responder" sceneMemberID="firstResponder"/>

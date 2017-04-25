@@ -13,6 +13,9 @@ import MapKit
 
 class IndividualPinViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    var cellArray:[IndexPath] = []
+    
+    @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var imageCollectionView: UICollectionView!
     fileprivate let itemsPerRow: CGFloat = 3
     fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
@@ -22,6 +25,7 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
         self.imageCollectionView.delegate = self
         self.imageCollectionView.dataSource = self
         self.fetchedResultController.delegate = self
+        addIndividualPin()
         
     }
     
@@ -40,32 +44,56 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
+
         return photoCount(objects: fetchedResultController.sections?[0].objects)
-    
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
        
         var photosArray: [Any]! = nil
+        
+      
+        let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! ImageCollectionViewCell
+ 
 
+        
         if let objects = fetchedResultController.sections?[0].objects {
             let pin = objects[0] as! Pin
             photosArray = (pin.photos?.allObjects)!
           
         }
 
-        let photo = photosArray[indexPath.row] as? Photo
-        
-        let image = UIImage(data: photo?.nsData as! Data)
-        
+            let photo = photosArray[indexPath.row] as? Photo
+            
+            let image = UIImage(data: photo?.nsData as! Data)
+            
+            cell.myImageView.image = image
 
-        let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! ImageCollectionViewCell
         
-        cell.myImageView.image =  image
-        
+       
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        var photosArray: [Any]! = nil
+        
+        let pin = fetchedResultController.sections?[0].objects?[0] as? Pin
+        
+        
+        if let objects = fetchedResultController.sections?[0].objects {
+            let pin = objects[0] as! Pin
+            photosArray = (pin.photos?.allObjects)!
+            
+        }
+        
+        let photo = photosArray[indexPath.row] as? Photo
+        
+        pin?.removeFromPhotos(photo!)
+   
+       
+    }
+
     
 
     
@@ -75,7 +103,6 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
 extension IndividualPinViewController {
     
     public func photoCount(objects: [Any]?) -> Int {
-        print("Photo Count Method called")
         if let objects = objects {
             for each in objects {
                 guard let pin = each as? Pin else {
@@ -123,10 +150,39 @@ extension IndividualPinViewController: UICollectionViewDelegateFlowLayout {
 extension IndividualPinViewController: NSFetchedResultsControllerDelegate {
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-            if type.rawValue == 4 {
+    
+        if type.rawValue == 4 {
                 self.imageCollectionView.reloadData()
             
         }
+        
     }
     
 }
+
+extension IndividualPinViewController: MKMapViewDelegate {
+   
+    public func addIndividualPin() {
+    let pin = fetchedResultController.sections?[0].objects?[0] as! Pin
+    
+    let lat = CLLocationDegrees((pin.latitude))
+    let long = CLLocationDegrees(pin.longitude)
+    let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+    let annotation = MKPointAnnotation()
+    annotation.coordinate = coordinate
+    mapView.addAnnotation(annotation)
+    
+    
+    }
+}
+
+
+
+
+
+
+
+
+    
+    
+    

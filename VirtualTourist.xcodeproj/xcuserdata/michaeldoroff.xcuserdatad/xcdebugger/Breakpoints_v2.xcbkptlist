@@ -88,11 +88,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VirtualTourist/MapViewController.swift"
-            timestampString = "514675450.779838"
+            timestampString = "514684554.648703"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
+            startingLineNumber = "175"
+            endingLineNumber = "175"
             landmarkName = "returnLatitudeOrLongitude(fetchcontroller:latOrLong:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -110,6 +110,22 @@
             startingLineNumber = "40"
             endingLineNumber = "40"
             landmarkName = "getPhotos(latitude:longitude:_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VirtualTourist/CollectionViewController.swift"
+            timestampString = "514775743.554978"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "166"
+            endingLineNumber = "166"
+            landmarkName = "addIndividualPin()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
