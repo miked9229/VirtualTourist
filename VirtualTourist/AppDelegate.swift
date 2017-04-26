@@ -75,6 +75,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         checkIfFirstLaunch()
         preloadData()
         stack.autoSave(60)
+        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+        print(paths[0])
         return true
     }
 

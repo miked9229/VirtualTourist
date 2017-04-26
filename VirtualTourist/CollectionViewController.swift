@@ -37,9 +37,7 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
     
         NetworkingHelpers().backgroundLoad(fetchcontroller: fetchedResultController)
         
-    
-    
-    
+
     
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -68,7 +66,6 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
       
         let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! ImageCollectionViewCell
  
-        
         if let objects = fetchedResultController.sections?[0].objects {
             let pin = objects[0] as! Pin
             photosArray = (pin.photos?.allObjects)!
@@ -81,31 +78,35 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
             
             cell.myImageView.image = image
 
-        
-       
+    
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+
         var photosArray: [Any]! = nil
         
-        let pin = fetchedResultController.sections?[0].objects?[0] as? Pin
+        var pin = fetchedResultController.sections?[0].objects?[0] as? Pin
         
         
         if let objects = fetchedResultController.sections?[0].objects {
             let pin = objects[0] as! Pin
-            photosArray = (pin.photos?.allObjects)!
+            photosArray = ((pin.photos?.allObjects)! as! [Photo])
             
         }
         
-        let photo = photosArray[indexPath.row] as? Photo
         
-        pin?.removeFromPhotos(photo!)
-   
-       
+        let photo = (photosArray[indexPath.row] as! Photo)
+        
+        pin?.removeFromPhotos(photo)
+        
+        
+        do {
+            try pin?.managedObjectContext?.save()
+        }  catch {
+                print("There was an error")
+            }
     }
-
     
 
     
@@ -121,7 +122,6 @@ extension IndividualPinViewController {
                     print("Could not get to pins")
                     return 0
                 }
-                print("\(pin.photos?.count)")
                 return (pin.photos?.count)!
                 
             }
@@ -163,10 +163,18 @@ extension IndividualPinViewController: NSFetchedResultsControllerDelegate {
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
     
+        
+
         if type.rawValue == 4 {
+//                let pin = controller.object(at: indexPath!) as! Pin
+                //pin.removeFromPhotos(anObject)
                 self.imageCollectionView.reloadData()
             
         }
+        
+    }
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+  
         
     }
     
