@@ -192,7 +192,7 @@ extension MapViewController {
     
     public func MoveToPinViewController(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>, pin: Pin, view: MKAnnotationView) {
 
-        let fr = NSFetchRequest<Pin>(entityName: "Photo")
+        let fr = NSFetchRequest<Photo>(entityName: "Photo")
         
         fr.sortDescriptors = []
         

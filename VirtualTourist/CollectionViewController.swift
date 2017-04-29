@@ -20,7 +20,7 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
     fileprivate let itemsPerRow: CGFloat = 3
     fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
     var pin: Pin? = nil
-    var fetchedResultController: NSFetchedResultsController <Pin>!
+    var fetchedResultController: NSFetchedResultsController <Photo>!
     var newFetchedResultsController: NSFetchedResultsController <Pin>!
     
     override func viewDidLoad() {
