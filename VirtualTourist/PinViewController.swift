@@ -14,12 +14,6 @@ class PinViewController: UIViewController {
     
     var Pin: Pin!
     
-   
-    override func viewDidLoad() {
-        print("Method called")
-    }
-    
-    
     override func viewWillAppear(_ animated: Bool) {
     
         super.viewWillAppear(animated)

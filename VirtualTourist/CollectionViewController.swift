@@ -19,7 +19,9 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
     @IBOutlet weak var imageCollectionView: UICollectionView!
     fileprivate let itemsPerRow: CGFloat = 3
     fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
-    var fetchedResultController: NSFetchedResultsController <NSFetchRequestResult>!
+    var pin: Pin? = nil
+    var fetchedResultController: NSFetchedResultsController <Pin>!
+    var newFetchedResultsController: NSFetchedResultsController <Pin>!
     
     override func viewDidLoad() {
         self.imageCollectionView.delegate = self
@@ -35,7 +37,7 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
         
         pin.photos = nil
     
-        NetworkingHelpers().backgroundLoad(fetchcontroller: fetchedResultController)
+        NetworkingHelpers().backgroundLoad(fetchcontroller: fetchedResultController as! NSFetchedResultsController<NSFetchRequestResult>)
         
 
     
@@ -54,27 +56,28 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
 
-        return photoCount(objects: fetchedResultController.sections?[0].objects)
+        if let fc = fetchedResultController {
+            print("\(fc) is non nil")
+            
+           print(fc.sections?.count)
+            return 0
+        } else {
+            return 0
+        }
+        
     }
+
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
        
         var photosArray: [Any]! = nil
         
-      
         let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! ImageCollectionViewCell
  
-        if let objects = fetchedResultController.sections?[0].objects {
-            let pin = objects[0] as! Pin
-            photosArray = (pin.photos?.allObjects)!
-          
-        }
-
-            let photo = photosArray[indexPath.row] as? Photo
+        let photo = photosArray[indexPath.row] as? Photo
             
-            let image = UIImage(data: photo?.nsData as! Data)
+        let image = UIImage(data: photo?.nsData as! Data)
             
             cell.myImageView.image = image
 
@@ -84,31 +87,20 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
+        
         var photosArray: [Any]! = nil
-        
-        var pin = fetchedResultController.sections?[0].objects?[0] as? Pin
-        
-        
+        let pin = fetchedResultController.sections?[0].objects?[0] as? Pin
         if let objects = fetchedResultController.sections?[0].objects {
             let pin = objects[0] as! Pin
             photosArray = ((pin.photos?.allObjects)! as! [Photo])
             
         }
-        
-        
-        let photo = (photosArray[indexPath.row] as! Photo)
-        
-        pin?.removeFromPhotos(photo)
-        
-        
-        do {
-            try pin?.managedObjectContext?.save()
-        }  catch {
-                print("There was an error")
-            }
-    }
-    
+         let photo = (photosArray[indexPath.row] as! Photo)
+  
 
+    }
+        
+    
     
 }
 
@@ -183,10 +175,10 @@ extension IndividualPinViewController: NSFetchedResultsControllerDelegate {
 extension IndividualPinViewController: MKMapViewDelegate {
    
     public func addIndividualPin() {
-    let pin = fetchedResultController.sections?[0].objects?[0] as! Pin
+    let individualPin = pin
     
-    let lat = CLLocationDegrees((pin.latitude))
-    let long = CLLocationDegrees(pin.longitude)
+    let lat = CLLocationDegrees((individualPin!.latitude))
+    let long = CLLocationDegrees(individualPin!.longitude)
     let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
     let annotation = MKPointAnnotation()
     annotation.coordinate = coordinate

@@ -16,7 +16,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     @IBOutlet weak var mapView: MKMapView!
     var annotationView: MKAnnotationView?
     
-    
     lazy var fetchedResultController: NSFetchedResultsController <NSFetchRequestResult> = {
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let stack = delegate.stack
@@ -33,7 +32,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         super.viewWillAppear(animated)
         self.fetchedResultController.delegate = self
         
-   
         setMapValues()
         checkSelectedAnnotations()
         
@@ -100,7 +98,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         do {
             try fetchedResultController.performFetch()
             
-           passFetchedResulController(fetchcontroller: fetchedResultController)
+            passFetchedResulController(fetchcontroller: fetchedResultController, view: view)
     
         } catch let err {
             print(err)
@@ -152,25 +150,24 @@ extension MapViewController {
     }
     
     
-    public func passFetchedResulController(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>) {
+    public func passFetchedResulController(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>, view: MKAnnotationView) {
         
         let pin = fetchcontroller.sections?[0].objects?[0] as! Pin
         
         if pin.isDownloaded {
-            MoveToPinViewController(fetchcontroller: fetchcontroller)
+            MoveToPinViewController(fetchcontroller: fetchcontroller, pin: pin, view: view)
   
             
         }
         else {
             NetworkingHelpers().backgroundLoad(fetchcontroller: fetchcontroller)
-            MoveToPinViewController(fetchcontroller: fetchcontroller)
+            MoveToPinViewController(fetchcontroller: fetchcontroller, pin: pin, view: view)
 
         }
   
     }
         
     public func returnLatitudeOrLongitude(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>, latOrLong: String) -> Double {
-        
         
         let pin = (fetchcontroller.sections?[0].objects)?[0] as! Pin
         if latOrLong == "lat" {
@@ -193,9 +190,23 @@ extension MapViewController {
         UserDefaults.standard.set(mapView.region.span.longitudeDelta, forKey: "longitudeDeltaKey")
     }
     
-    public func MoveToPinViewController(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>) {
+    public func MoveToPinViewController(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>, pin: Pin, view: MKAnnotationView) {
+
+        let fr = NSFetchRequest<Pin>(entityName: "Photo")
+        
+        fr.sortDescriptors = []
+        
+        let pred = NSPredicate(format: "Pin = %@", argumentArray: [pin])
+        
+        fr.predicate = pred
+        
+        let fc = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: fetchcontroller.managedObjectContext, sectionNameKeyPath: nil , cacheName: nil)
+        
         let controller = self.storyboard?.instantiateViewController(withIdentifier:"IndividualPinViewController") as! IndividualPinViewController
-        controller.fetchedResultController = fetchcontroller
+        
+        controller.fetchedResultController = fc
+        controller.pin = pin
+        
         self.navigationController?.pushViewController(controller, animated: true)
         
     }
