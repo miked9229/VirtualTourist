@@ -191,18 +191,28 @@ extension MapViewController {
     }
     
     public func MoveToPinViewController(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>, pin: Pin, view: MKAnnotationView) {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = delegate.stack
 
         let fr = NSFetchRequest<Photo>(entityName: "Photo")
         
         fr.sortDescriptors = []
         
-        let pred = NSPredicate(format: "Pin = %@", argumentArray: [pin])
+        print(pin)
+        
+        let pred = NSPredicate(format: "pin = %@", pin)
         
         fr.predicate = pred
         
-        let fc = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: fetchcontroller.managedObjectContext, sectionNameKeyPath: nil , cacheName: nil)
+        let fc = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: stack.context, sectionNameKeyPath: nil , cacheName: nil)
         
         let controller = self.storyboard?.instantiateViewController(withIdentifier:"IndividualPinViewController") as! IndividualPinViewController
+        
+        do {
+            try fc.performFetch()
+        } catch let e as Error {
+            print(e)
+        }
         
         controller.fetchedResultController = fc
         controller.pin = pin

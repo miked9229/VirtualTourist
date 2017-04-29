@@ -121,8 +121,6 @@ extension FlickrClient {
         let longitudeMaximum = (longitude + Constants.Maximums.LongitudeMaximumDeviation) <= 180 ? (longitude + Constants.Maximums.LongitudeMaximumDeviation): -180
         let latitudeMaximum = (latitude + Constants.Maximums.LatitudeMaximumDeviation) <= 90 ? (latitude + Constants.Maximums.LatitudeMaximumDeviation): -90
         
-        print(longitude, latitude)
-        print("\(longitudeMinimum),\(latitudeMinimum),\(longitudeMaximum),\(latitudeMaximum)")
         
         return "\(longitudeMinimum),\(latitudeMinimum),\(longitudeMaximum),\(latitudeMaximum)"
     }

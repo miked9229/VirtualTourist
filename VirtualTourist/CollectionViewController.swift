@@ -58,26 +58,26 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
         if let fc = fetchedResultController {
-            print("\(fc) is non nil")
             
-           print(fc.sections?.count)
-            return 0
-        } else {
-            return 0
+            print(fc.sections?[0].numberOfObjects)
+            if let count = fc.sections?[0].numberOfObjects {
+                return count
+            } else {
+                return 0
+            }
+  
         }
-        
+        return 0
     }
 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
        
-        var photosArray: [Any]! = nil
-        
         let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! ImageCollectionViewCell
  
-        let photo = photosArray[indexPath.row] as? Photo
+        let photo = fetchedResultController.object(at: indexPath)
             
-        let image = UIImage(data: photo?.nsData as! Data)
+        let image = UIImage(data: photo.nsData as! Data)
             
             cell.myImageView.image = image
 
@@ -86,46 +86,17 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
         
-        var photosArray: [Any]! = nil
-        let pin = fetchedResultController.sections?[0].objects?[0] as? Pin
-        if let objects = fetchedResultController.sections?[0].objects {
-            let pin = objects[0] as! Pin
-            photosArray = ((pin.photos?.allObjects)! as! [Photo])
-            
-        }
-         let photo = (photosArray[indexPath.row] as! Photo)
-  
-
-    }
+        fetchedResultController.managedObjectContext.delete(fetchedResultController.object(at: indexPath))
         
+        print(fetchedResultController.managedObjectContext.deletedObjects)
+        
+
     
+    }
     
 }
 
-
-extension IndividualPinViewController {
-    
-    public func photoCount(objects: [Any]?) -> Int {
-        if let objects = objects {
-            for each in objects {
-                guard let pin = each as? Pin else {
-                    print("Could not get to pins")
-                    return 0
-                }
-                return (pin.photos?.count)!
-                
-            }
-            
-        } else {
-            return 0
-        }
-        
-        return 0
-    }
-
-}
 extension IndividualPinViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView,
@@ -155,12 +126,17 @@ extension IndividualPinViewController: NSFetchedResultsControllerDelegate {
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
     
+        if type.rawValue == 1 {
+            self.imageCollectionView.reloadData()
+            
+        }
         
+        if type.rawValue == 2 {
+            self.imageCollectionView.reloadData()
+        }
 
         if type.rawValue == 4 {
-//                let pin = controller.object(at: indexPath!) as! Pin
-                //pin.removeFromPhotos(anObject)
-                self.imageCollectionView.reloadData()
+            self.imageCollectionView.reloadData()
             
         }
         
