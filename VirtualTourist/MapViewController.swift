@@ -149,7 +149,6 @@ extension MapViewController {
         
     }
     
-    
     public func passFetchedResulController(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>, view: MKAnnotationView) {
         
         let pin = fetchcontroller.sections?[0].objects?[0] as! Pin
@@ -160,23 +159,33 @@ extension MapViewController {
             
         }
         else {
-            NetworkingHelpers().backgroundLoad(fetchcontroller: fetchcontroller)
+            NetworkingHelpers().backgroundLoad(fetchcontroller: fetchcontroller, pinFlag: false, Pin: nil)
             MoveToPinViewController(fetchcontroller: fetchcontroller, pin: pin, view: view)
 
         }
   
     }
         
-    public func returnLatitudeOrLongitude(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>, latOrLong: String) -> Double {
+    public func returnLatitudeOrLongitude(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>, latOrLong: String, pinflag: Bool, newPin: Pin?) -> Double {
         
-        let pin = (fetchcontroller.sections?[0].objects)?[0] as! Pin
+        var pin: Pin? = nil
+        
+        if pinflag {
+            pin = newPin
+            
+        } else {
+            pin = (fetchcontroller.sections?[0].objects)?[0] as! Pin? 
+        }
+        
+       
+        
         if latOrLong == "lat" {
           
-             return pin.latitude
+             return pin!.latitude
             
         }
         else {
-            return pin.longitude
+            return pin!.longitude
         }
         
 
@@ -210,7 +219,7 @@ extension MapViewController {
         
         do {
             try fc.performFetch()
-        } catch let e as Error {
+        } catch let e  {
             print(e)
         }
         

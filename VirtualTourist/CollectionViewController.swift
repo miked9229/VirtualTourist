@@ -13,8 +13,6 @@ import MapKit
 
 class IndividualPinViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    var cellArray:[IndexPath] = []
-    
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var imageCollectionView: UICollectionView!
     fileprivate let itemsPerRow: CGFloat = 3
@@ -33,14 +31,10 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
     
     @IBAction func newCollection(_ sender: Any) {
         
-        let pin = fetchedResultController.sections?[0].objects?[0] as! Pin
+        deleteAllPhotos()
         
-        pin.photos = nil
-    
-        NetworkingHelpers().backgroundLoad(fetchcontroller: fetchedResultController as! NSFetchedResultsController<NSFetchRequestResult>)
+        NetworkingHelpers().backgroundLoad(fetchcontroller: fetchedResultController as! NSFetchedResultsController<NSFetchRequestResult>, pinFlag: true, Pin: pin)
         
-
-    
     }
     override func viewWillAppear(_ animated: Bool) {
         
@@ -59,15 +53,15 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
 
         if let fc = fetchedResultController {
             
-            print(fc.sections?[0].numberOfObjects)
             if let count = fc.sections?[0].numberOfObjects {
+                print(count)
                 return count
             } else {
                 return 0
             }
   
         }
-        return 0
+        return 30
     }
 
     
@@ -75,11 +69,15 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
        
         let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! ImageCollectionViewCell
  
+        
         let photo = fetchedResultController.object(at: indexPath)
+        
+        
             
         let image = UIImage(data: photo.nsData as! Data)
+        
             
-            cell.myImageView.image = image
+        cell.myImageView.image = image
 
     
         return cell
@@ -88,10 +86,14 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         fetchedResultController.managedObjectContext.delete(fetchedResultController.object(at: indexPath))
+    
+        do {
+            try  fetchedResultController.managedObjectContext.save()
+        } catch {
+            print("There was an error saving")
+        }
         
-        print(fetchedResultController.managedObjectContext.deletedObjects)
-        
-
+            
     
     }
     
@@ -162,14 +164,14 @@ extension IndividualPinViewController: MKMapViewDelegate {
     
     
     }
+    public func deleteAllPhotos() {
+        for each in fetchedResultController.fetchedObjects! {
+            fetchedResultController.managedObjectContext.delete(each)
+        }
+    }
+
+
 }
-
-
-
-
-
-
-
 
     
     

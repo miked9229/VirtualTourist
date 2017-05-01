@@ -29,6 +29,7 @@ struct Constants {
         static let bbox = "bbox"
         static let radius = "radius"
         static let per_page = "per_page"
+        static let page = "page"
     }
     
     // MARK: Flickr Parameter Values

@@ -14,6 +14,8 @@ class FlickrClient {
 
     
     public func getPhotos(latitude: Double, longitude: Double, _ completionHandlerForGetPhotos: @escaping (_ success: Bool, _ data: [[String: AnyObject]]?, _ error: String?) -> Void) {
+        
+        let randomNumber = UInt64(arc4random_uniform(50) + 1)
 
         
         let methodParameters = [Constants.FlickrParameterKeys.Method:
@@ -26,7 +28,8 @@ class FlickrClient {
                                 Constants.FlickrParameterKeys.NoJSONCallback: Constants.FlickrParameterValues.DisableJSONCallback,
                                 Constants.FlickrParameterKeys.bbox: returnBbox(latitude: latitude, longitude: longitude),
                                 Constants.FlickrParameterKeys.Extras: Constants.FlickrParameterValues.url_m,
-                                Constants.FlickrParameterKeys.per_page: Constants.FlickrParameterValues.per_page_limit]
+                                Constants.FlickrParameterKeys.per_page: Constants.FlickrParameterValues.per_page_limit,
+                                Constants.FlickrParameterKeys.page: randomNumber]
             as [String : Any]
         
         
