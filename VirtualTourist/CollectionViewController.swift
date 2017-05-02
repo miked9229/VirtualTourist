@@ -55,7 +55,7 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
             
             if let count = fc.sections?[0].numberOfObjects {
                 print(count)
-                return count
+                return count >= 30 ? count : 30
             } else {
                 return 0
             }
@@ -70,14 +70,16 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
         let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! ImageCollectionViewCell
  
         
-        let photo = fetchedResultController.object(at: indexPath)
         
-        
+        if (fetchedResultController.sections?[0].numberOfObjects)! >= 30 {
             
-        let image = UIImage(data: photo.nsData as! Data)
-        
+            let photo = fetchedResultController.object(at: indexPath)
+            let image = UIImage(data: photo.nsData as! Data)
+            cell.myImageView.image = image
             
-        cell.myImageView.image = image
+        }
+        
+
 
     
         return cell

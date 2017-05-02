@@ -105,7 +105,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="107" height="76"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yuq-S6-SZb">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dog" translatesAutoresizingMaskIntoConstraints="NO" id="yuq-S6-SZb">
                                                     <rect key="frame" x="8" y="0.0" width="99" height="76"/>
                                                 </imageView>
                                             </subviews>
@@ -164,4 +164,7 @@
             <point key="canvasLocation" x="1565.5999999999999" y="133.5832083958021"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="dog" width="93" height="93"/>
+    </resources>
 </document>
