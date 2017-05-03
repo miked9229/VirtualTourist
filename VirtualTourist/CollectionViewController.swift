@@ -33,6 +33,8 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
         
         deleteAllPhotos()
         
+        imageCollectionView.reloadData()
+        
         NetworkingHelpers().backgroundLoad(fetchcontroller: fetchedResultController as! NSFetchedResultsController<NSFetchRequestResult>, pinFlag: true, Pin: pin)
         
     }
@@ -55,29 +57,32 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
             
             if let count = fc.sections?[0].numberOfObjects {
                 print(count)
-                return count >= 30 ? count : 30
+                return count >= 30 ? count: 30
             } else {
                 return 0
             }
   
         }
-        return 30
+        return 0
     }
 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
        
         let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! ImageCollectionViewCell
- 
+
         
+        let count = fetchedResultController.sections?[0].numberOfObjects
         
-        if (fetchedResultController.sections?[0].numberOfObjects)! >= 30 {
-            
+        if count! >= 30 {
             let photo = fetchedResultController.object(at: indexPath)
             let image = UIImage(data: photo.nsData as! Data)
             cell.myImageView.image = image
             
-        }
+            }
+        
+
+        
         
 
 
@@ -136,6 +141,7 @@ extension IndividualPinViewController: NSFetchedResultsControllerDelegate {
         }
         
         if type.rawValue == 2 {
+            print("Delete method called")
             self.imageCollectionView.reloadData()
         }
 

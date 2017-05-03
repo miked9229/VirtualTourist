@@ -207,8 +207,6 @@ extension MapViewController {
         
         fr.sortDescriptors = []
         
-        print(pin)
-        
         let pred = NSPredicate(format: "pin = %@", pin)
         
         fr.predicate = pred
