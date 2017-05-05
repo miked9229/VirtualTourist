@@ -29,13 +29,16 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
         
     }
     
+    
+    
     @IBAction func newCollection(_ sender: Any) {
         
         deleteAllPhotos()
+    
+        NetworkingHelpers().backgroundLoad(fetchcontroller: fetchedResultController as! NSFetchedResultsController<NSFetchRequestResult>, pinFlag: true, Pin: pin)
         
         imageCollectionView.reloadData()
         
-        NetworkingHelpers().backgroundLoad(fetchcontroller: fetchedResultController as! NSFetchedResultsController<NSFetchRequestResult>, pinFlag: true, Pin: pin)
         
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -53,17 +56,10 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
-        if let fc = fetchedResultController {
-            
-            if let count = fc.sections?[0].numberOfObjects {
-                print(count)
-                return count >= 30 ? count: 30
-            } else {
-                return 0
-            }
-  
-        }
-        return 0
+        let sections = fetchedResultController.sections![section]
+        
+        print(sections.numberOfObjects)
+        return sections.numberOfObjects
     }
 
     
@@ -72,20 +68,14 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
         let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! ImageCollectionViewCell
 
         
-        let count = fetchedResultController.sections?[0].numberOfObjects
-        
-        if count! >= 30 {
             let photo = fetchedResultController.object(at: indexPath)
+        
             let image = UIImage(data: photo.nsData as! Data)
+        
+        
             cell.myImageView.image = image
             
-            }
         
-
-        
-        
-
-
     
         return cell
     }
@@ -100,8 +90,6 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
             print("There was an error saving")
         }
         
-            
-    
     }
     
 }

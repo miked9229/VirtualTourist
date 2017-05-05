@@ -25,6 +25,7 @@ class NetworkingHelpers {
                 FlickrClient.sharedInstance().getPhotos(latitude: MapViewController().returnLatitudeOrLongitude(fetchcontroller: fetchcontroller, latOrLong: "lat", pinflag: pinFlag, newPin: Pin), longitude: MapViewController().returnLatitudeOrLongitude(fetchcontroller: fetchcontroller, latOrLong: "long", pinflag: pinFlag, newPin: Pin)) {(sucess, data, error) in
                 
                     if let data = data {
+                        print(data)
                         self.appendToPin(data: data, fetchcontroller: fetchcontroller, newPin: Pin, pinFlag: pinFlag)
                         
                     }
@@ -45,8 +46,10 @@ class NetworkingHelpers {
         
         if pinFlag {
             
+            
             for eachPhoto in data  {
                 let photoString = eachPhoto[Constants.FlickrParameterValues.url_m] as! String
+                
                 
                 downloadImage(imagePath: photoString) {(imageData, ErrorString) in
                     
@@ -77,7 +80,7 @@ class NetworkingHelpers {
                             
                             
                             
-                            pin.addToPhotos(Photo(image: imageData!, context: stack.context))
+                        pin.addToPhotos(Photo(image: imageData!, context: stack.context))
                             
                         }
                         

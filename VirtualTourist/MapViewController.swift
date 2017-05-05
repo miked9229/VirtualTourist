@@ -151,7 +151,10 @@ extension MapViewController {
     
     public func passFetchedResulController(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>, view: MKAnnotationView) {
         
+  
         let pin = fetchcontroller.sections?[0].objects?[0] as! Pin
+         
+  
         
         if pin.isDownloaded {
             MoveToPinViewController(fetchcontroller: fetchcontroller, pin: pin, view: view)
@@ -162,9 +165,11 @@ extension MapViewController {
             NetworkingHelpers().backgroundLoad(fetchcontroller: fetchcontroller, pinFlag: false, Pin: nil)
             MoveToPinViewController(fetchcontroller: fetchcontroller, pin: pin, view: view)
 
-        }
+            }
   
-    }
+        }
+    
+
         
     public func returnLatitudeOrLongitude(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>, latOrLong: String, pinflag: Bool, newPin: Pin?) -> Double {
         
@@ -188,8 +193,10 @@ extension MapViewController {
             return pin!.longitude
         }
         
-
+        
     }
+    
+
 
     public func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
         
@@ -227,9 +234,6 @@ extension MapViewController {
         self.navigationController?.pushViewController(controller, animated: true)
         
     }
-
-    
-
 }
 
 
