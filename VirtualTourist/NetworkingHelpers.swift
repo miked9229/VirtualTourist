@@ -12,7 +12,6 @@ import UIKit
 
 class NetworkingHelpers {
     
-    
     public func backgroundLoad(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>, pinFlag: Bool, Pin: Pin?) {
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let stack = delegate.stack
@@ -25,7 +24,7 @@ class NetworkingHelpers {
                 FlickrClient.sharedInstance().getPhotos(latitude: MapViewController().returnLatitudeOrLongitude(fetchcontroller: fetchcontroller, latOrLong: "lat", pinflag: pinFlag, newPin: Pin), longitude: MapViewController().returnLatitudeOrLongitude(fetchcontroller: fetchcontroller, latOrLong: "long", pinflag: pinFlag, newPin: Pin)) {(sucess, data, error) in
                 
                     if let data = data {
-                        print(data)
+                        
                         self.appendToPin(data: data, fetchcontroller: fetchcontroller, newPin: Pin, pinFlag: pinFlag)
                         
                     }
@@ -44,12 +43,15 @@ class NetworkingHelpers {
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let stack = delegate.stack
         
+    
         if pinFlag {
             
             
             for eachPhoto in data  {
+           
                 let photoString = eachPhoto[Constants.FlickrParameterValues.url_m] as! String
                 
+//                let photo = Photo(image: (photoString as? NSData)!, context: stack.context)
                 
                 downloadImage(imagePath: photoString) {(imageData, ErrorString) in
                     
@@ -62,8 +64,6 @@ class NetworkingHelpers {
             }
             newPin?.isDownloaded = true
      
-            
-            
         } else {
     
             if let object = fetchcontroller.sections?[0].objects {
@@ -99,7 +99,7 @@ class NetworkingHelpers {
 
     }
     public func downloadImage(imagePath:String, completionHandler: @escaping ( _ imageData: NSData?, _ errorString: String?) -> Void) {
-        
+        print(imagePath)
         let session = URLSession.shared
         let imgURL = NSURL(string: imagePath)
         let request: NSURLRequest = NSURLRequest(url: imgURL! as URL)

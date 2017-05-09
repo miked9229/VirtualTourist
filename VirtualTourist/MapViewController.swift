@@ -151,16 +151,12 @@ extension MapViewController {
     
     public func passFetchedResulController(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>, view: MKAnnotationView) {
         
-  
         let pin = fetchcontroller.sections?[0].objects?[0] as! Pin
          
-  
-        
         if pin.isDownloaded {
             MoveToPinViewController(fetchcontroller: fetchcontroller, pin: pin, view: view)
-  
-            
         }
+            
         else {
             NetworkingHelpers().backgroundLoad(fetchcontroller: fetchcontroller, pinFlag: false, Pin: nil)
             MoveToPinViewController(fetchcontroller: fetchcontroller, pin: pin, view: view)

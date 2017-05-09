@@ -37,7 +37,11 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
     
         NetworkingHelpers().backgroundLoad(fetchcontroller: fetchedResultController as! NSFetchedResultsController<NSFetchRequestResult>, pinFlag: true, Pin: pin)
         
-        imageCollectionView.reloadData()
+        performUIUpdatesOnMain {
+            self.imageCollectionView.reloadData()
+        }
+        
+  
         
         
     }
