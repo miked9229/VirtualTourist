@@ -99,6 +99,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
             try fetchedResultController.performFetch()
             
             passFetchedResulController(fetchcontroller: fetchedResultController, view: view)
+
     
         } catch let err {
             print(err)
@@ -158,7 +159,7 @@ extension MapViewController {
         }
             
         else {
-            NetworkingHelpers().backgroundLoad(fetchcontroller: fetchcontroller, pinFlag: false, Pin: nil)
+            NetworkingHelpers().backgroundLoad(fetchcontroller: fetchcontroller, pinFlag: false, Pin: pin)
             MoveToPinViewController(fetchcontroller: fetchcontroller, pin: pin, view: view)
 
             }

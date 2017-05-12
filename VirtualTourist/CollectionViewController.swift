@@ -61,8 +61,6 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
         let sections = fetchedResultController.sections![section]
-        
-        print(sections.numberOfObjects)
         return sections.numberOfObjects
     }
 
@@ -71,14 +69,21 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
        
         let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! ImageCollectionViewCell
 
+        let photo = fetchedResultController.object(at: indexPath)
         
-            let photo = fetchedResultController.object(at: indexPath)
-        
+        if photo.nsData != nil {
             let image = UIImage(data: photo.nsData as! Data)
-        
-        
             cell.myImageView.image = image
+        
+        } else {
+            NetworkingHelpers().downloadImage(imagePath: photo.imageURL!) {(imageData, errorString) in
+                
+                photo.nsData = imageData
+            }
             
+        }
+        
+ 
         
     
         return cell
