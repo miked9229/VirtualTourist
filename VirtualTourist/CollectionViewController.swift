@@ -29,8 +29,7 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
         
     }
     
-    
-    
+
     @IBAction func newCollection(_ sender: Any) {
         
         deleteAllPhotos()
@@ -61,6 +60,7 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
         let sections = fetchedResultController.sections![section]
+        print(sections.numberOfObjects)
         return sections.numberOfObjects
     }
 
@@ -72,6 +72,7 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
         let photo = fetchedResultController.object(at: indexPath)
         
         if photo.nsData != nil {
+            
             let image = UIImage(data: photo.nsData as! Data)
             cell.myImageView.image = image
         
@@ -82,9 +83,6 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
             }
             
         }
-        
- 
-        
     
         return cell
     }
@@ -133,17 +131,27 @@ extension IndividualPinViewController: NSFetchedResultsControllerDelegate {
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
     
         if type.rawValue == 1 {
-            self.imageCollectionView.reloadData()
+            print("Method called.....")
+            performUIUpdatesOnMain {
+                self.imageCollectionView.reloadData()
+            }
+            
             
         }
         
         if type.rawValue == 2 {
-            print("Delete method called")
-            self.imageCollectionView.reloadData()
+            performUIUpdatesOnMain {
+                 self.imageCollectionView.reloadData()
+            }
+           
         }
 
         if type.rawValue == 4 {
-            self.imageCollectionView.reloadData()
+            
+            performUIUpdatesOnMain {
+                self.imageCollectionView.reloadData()
+            }
+       
             
         }
         
@@ -172,6 +180,16 @@ extension IndividualPinViewController: MKMapViewDelegate {
     public func deleteAllPhotos() {
         for each in fetchedResultController.fetchedObjects! {
             fetchedResultController.managedObjectContext.delete(each)
+            
+            
+            
+            do {
+                try  fetchedResultController.managedObjectContext.save()
+            } catch {
+                print("There was an error saving")
+            }
+
+         
         }
     }
 

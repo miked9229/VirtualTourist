@@ -15,7 +15,8 @@ class NetworkingHelpers {
     public func backgroundLoad(fetchcontroller: NSFetchedResultsController <NSFetchRequestResult>, pinFlag: Bool, Pin: Pin?) {
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let stack = delegate.stack
-
+        if Pin?.isDownloaded == false {
+            
                 FlickrClient.sharedInstance().getPhotos(latitude: MapViewController().returnLatitudeOrLongitude(fetchcontroller: fetchcontroller, latOrLong: "lat", pinflag: pinFlag, newPin: Pin), longitude: MapViewController().returnLatitudeOrLongitude(fetchcontroller: fetchcontroller, latOrLong: "long", pinflag: pinFlag, newPin: Pin)) {(sucess, data, error) in
                 
                     if let data = data {
@@ -24,23 +25,23 @@ class NetworkingHelpers {
                         for each in data {
                             let photoString = each[Constants.FlickrParameterValues.url_m] as! String
                             
-                            
                             let photo = Photo(image: nil, imageURL: photoString, context: stack.context)
 
                             Pin?.addToPhotos(photo)
+                            
                  
                         }
            
                         
                 }
+                    Pin?.isDownloaded = true
                 
             }
         
-        
         }
+    }
     
     public func downloadImage(imagePath:String, completionHandler: @escaping ( _ imageData: NSData?, _ errorString: String?) -> Void) {
-        print(imagePath)
         let session = URLSession.shared
         let imgURL = NSURL(string: imagePath)
         let request: NSURLRequest = NSURLRequest(url: imgURL! as URL)
