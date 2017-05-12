@@ -21,13 +21,14 @@ class NetworkingHelpers {
                 
                     if let data = data {
                         
-           
                         for each in data {
                             let photoString = each[Constants.FlickrParameterValues.url_m] as! String
                             
                             let photo = Photo(image: nil, imageURL: photoString, context: stack.context)
 
                             Pin?.addToPhotos(photo)
+                            
+                            stack.save()
                             
                  
                         }

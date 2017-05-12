@@ -34,7 +34,20 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
         
         deleteAllPhotos()
     
+        pin?.isDownloaded = false
+        
         NetworkingHelpers().backgroundLoad(fetchcontroller: fetchedResultController as! NSFetchedResultsController<NSFetchRequestResult>, pinFlag: true, Pin: pin)
+        
+        pin?.isDownloaded = true
+        
+        
+        
+        do {
+            try fetchedResultController.performFetch()
+        } catch {
+            print("There was an error performing a fetch")
+            
+        }
         
         performUIUpdatesOnMain {
             self.imageCollectionView.reloadData()
@@ -49,7 +62,9 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
         super.viewWillAppear(animated)
         let backbutton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(back))
         navigationItem.leftBarButtonItem = backbutton
-        
+    
+    
+    
     }
     
     func back() {
@@ -60,13 +75,16 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
         let sections = fetchedResultController.sections![section]
-        print(sections.numberOfObjects)
         return sections.numberOfObjects
     }
 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
        
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = delegate.stack
+        
+        
         let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: "CollectionCell", for: indexPath) as! ImageCollectionViewCell
 
         let photo = fetchedResultController.object(at: indexPath)
@@ -80,6 +98,8 @@ class IndividualPinViewController: UIViewController, UICollectionViewDelegate, U
             NetworkingHelpers().downloadImage(imagePath: photo.imageURL!) {(imageData, errorString) in
                 
                 photo.nsData = imageData
+                
+                stack.save()
             }
             
         }
@@ -131,7 +151,6 @@ extension IndividualPinViewController: NSFetchedResultsControllerDelegate {
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
     
         if type.rawValue == 1 {
-            print("Method called.....")
             performUIUpdatesOnMain {
                 self.imageCollectionView.reloadData()
             }
@@ -156,10 +175,7 @@ extension IndividualPinViewController: NSFetchedResultsControllerDelegate {
         }
         
     }
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-  
-        
-    }
+
     
 }
 
@@ -181,8 +197,6 @@ extension IndividualPinViewController: MKMapViewDelegate {
         for each in fetchedResultController.fetchedObjects! {
             fetchedResultController.managedObjectContext.delete(each)
             
-            
-            
             do {
                 try  fetchedResultController.managedObjectContext.save()
             } catch {
@@ -191,6 +205,8 @@ extension IndividualPinViewController: MKMapViewDelegate {
 
          
         }
+      
+  
     }
 
 
