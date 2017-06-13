@@ -44,6 +44,7 @@ Click the run button on the simulator
 ![](http://i.imgur.com/Ui1YpPP.gif)
 
 
+
 ## Running the tests
 
 Explain how to run the automated tests for this system
