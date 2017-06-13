@@ -1,6 +1,8 @@
 # Virtual Tourist
 
-One Paragraph of project description goes here
+Virtual Tourist is a portfolio app for the iOS Developer Nanodegree Program. The original idea was given to the students by Udacity, but the implementation was left completely up to the student. 
+
+Virtual Tourist at its core is an MKMapView that allows users to drop MKAnnotations. After the user drops MKAnnotations and the user clicks on the annotation, each annotation makes a network request to the Flickr API. The Flickr API returns images based on longitude latitude passed by the MKAnnotation
 
 ## Getting Started
 
@@ -8,10 +10,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+Make sure you have the latest version of Xcode 
 
 ```
-Give examples
+Xcode can be found at https://developer.apple.com/xcode/downloads/
 ```
 
 ### Installing
