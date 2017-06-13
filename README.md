@@ -39,7 +39,9 @@ open VirtualTourist.xcodeproj
 
 ```
 
-CLick the run button on the simulator 
+Click the run button on the simulator 
+
+![](http://i.imgur.com/mRHAWj1.gif)
 
 
 ## Running the tests
