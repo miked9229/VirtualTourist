@@ -41,7 +41,7 @@ open VirtualTourist.xcodeproj
 
 Click the run button on the simulator 
 
-![](http://i.imgur.com/Ui1YpPP.gif)
+![](http://i.imgur.com/e7AueWt.gif)
 
 
 
